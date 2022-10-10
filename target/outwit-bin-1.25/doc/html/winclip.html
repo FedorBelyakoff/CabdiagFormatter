@@ -1,0 +1,365 @@
+<!-- Creator     : groff version 1.22.3 -->
+<!-- CreationDate: Sun Mar 20 21:32:10 2016 -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta name="generator" content="groff -Thtml, see www.gnu.org">
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<meta name="Content-Style" content="text/css">
+<style type="text/css">
+       p       { margin-top: 0; margin-bottom: 0; vertical-align: top }
+       pre     { margin-top: 0; margin-bottom: 0; vertical-align: top }
+       table   { margin-top: 0; margin-bottom: 0; vertical-align: top }
+       h1      { text-align: center }
+</style>
+<title>WINCLIP</title>
+
+</head>
+<body>
+
+<h1 align="center">WINCLIP</h1>
+
+<a href="#NAME">NAME</a><br>
+<a href="#SYNOPSIS">SYNOPSIS</a><br>
+<a href="#DESCRIPTION">DESCRIPTION</a><br>
+<a href="#OPTIONS">OPTIONS</a><br>
+<a href="#EXAMPLE">EXAMPLE</a><br>
+<a href="#SEE ALSO">SEE ALSO</a><br>
+<a href="#AUTHOR">AUTHOR</a><br>
+<a href="#BUGS">BUGS</a><br>
+
+<hr>
+
+
+<h2>NAME
+<a name="NAME"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">winclip -
+console Windows clipboard interface</p>
+
+<h2>SYNOPSIS
+<a name="SYNOPSIS"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em"><b>winclip</b>
+[<b>-h</b>|<b>-v</b>]
+[<b>-w</b>|<b>-u</b>|<b>-m</b>|<b>-g</b>|<b>-r</b>]
+[<b>-b</b>] [<b>-l</b> <i>lang</i>]
+[<b>-s</b> <i>sublang</i>]
+<b>-c</b>|<b>-p</b>|<b>-i</b> [<i>file</i>]</p>
+
+<h2>DESCRIPTION
+<a name="DESCRIPTION"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em"><i>Winclip</i>
+provides access to the Windows clipboard from a console or
+MS-DOS window. Its operation depends on its mandatory
+argument. When executed with the -p (paste) argument it
+pastes the Windows clipboard to its standard output or to
+the <i>file</i> optionally specified in the command line.
+The <i>winclip</i> output may be redirected to a file (using
+the shell &gt; syntax) or to another process (using the
+shell | pipeline syntax). When <i>winclip</i> is executed
+with the -c (copy) argument it copies its standard input (or
+the <i>file</i> optionally specified in the command line) to
+the Windows clipboard. Again, <i>winclip</i> input may be
+redirected to be read from a file (using the &lt; shell
+syntax), or from another process of a pipeline. Finally,
+when <i>winclip</i> is executed with the -i (information)
+argument it will print on its standard output all data
+formats that can be retrieved from the clipboard.</p>
+
+<p style="margin-left:11%; margin-top: 1em"><i>Winclip</i>
+can currently paste text clipboard data, filenames that have
+been copied in the Windows explorer, and bitmaps which are
+pasted in binary <i>ppm</i> format. When tranfering text, it
+will automatically perform the appropriate Windows to
+console character code (OEM) set translations.
+<i>Winclip</i> is an Intel architecture Win32 program that
+only works under the Intel processor versions of Windows NT,
+95, 98, Me, 2000, XP.</p>
+
+<h2>OPTIONS
+<a name="OPTIONS"></a>
+</h2>
+
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="3%">
+
+
+<p style="margin-top: 1em"><b>-c</b></p></td>
+<td width="8%"></td>
+<td width="78%">
+
+
+<p style="margin-top: 1em">Copy the standard input to the
+Windows clipboard.</p></td></tr>
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="3%">
+
+
+<p><b>-p</b></p></td>
+<td width="8%"></td>
+<td width="78%">
+
+
+<p>Copy the Windows clipboard contents to the standard
+output.</p> </td></tr>
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="3%">
+
+
+<p><b>-i</b></p></td>
+<td width="8%"></td>
+<td width="78%">
+
+
+<p>Print on the standard output the data formats available
+in the clipboard. Each format is displayed on a separate
+line. The standard clipboard formats are printed using their
+Windows API CF_ names; all other formats are printed using
+their registered name.</p></td></tr>
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="3%">
+
+
+<p><b>-w</b></p></td>
+<td width="8%"></td>
+<td width="78%">
+
+
+<p>Transfer text in the Windows-native format (CF_TEXT)
+instead of the (default) DOS-native format (CF_OEMTEXT). The
+Windows format is also known as ANSI text, but often
+represents another Windows and locale-specific code page.
+Setting this option will affect how non-ASCII characters
+will be encoded for clipboard text and copied file
+icons.</p> </td></tr>
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="3%">
+
+
+<p><b>-u</b></p></td>
+<td width="8%"></td>
+<td width="78%">
+
+
+<p>Transfer text in Unicode format (CF_UNICODETEXT) instead
+of the (default) DOS-native format (CF_OEMTEXT). The Unicode
+encoding is the same as the one used by the Windows
+clipboard: apparently UCS-16 in little-endian byte order
+(UTF-16LE). Setting this option will affect how non-ASCII
+characters will be encoded for clipboard text and copied
+file icons.</p></td></tr>
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="3%">
+
+
+<p><b>-m</b></p></td>
+<td width="8%"></td>
+<td width="78%">
+
+
+<p>Transfer text in Unicode format (CF_UNICODETEXT) instead
+of the (default) DOS-native format (CF_OEMTEXT). The Unicode
+encoding is UTF-8. Setting this option will affect how
+non-ASCII characters will be encoded for clipboard text and
+copied file icons.</p></td></tr>
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="3%">
+
+
+<p><b>-r</b></p></td>
+<td width="8%"></td>
+<td width="78%">
+
+
+<p>Copy into the clipboard text specified to be in rich
+text format (RTF).</p></td></tr>
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="3%">
+
+
+<p><b>-b</b></p></td>
+<td width="8%"></td>
+<td width="78%">
+
+
+<p>When outputing Unicode text, prepend a byte order mark
+(BOM) at the beginning. This may make it easier for other
+tools to recognize <i>winclip</i>&rsquo;s output format.
+When reading data for the clipboard, automatically detect
+Unicode data, and set the encoding and endianess, if a
+byte-order-mark is detected.</p></td></tr>
+</table>
+
+<p style="margin-left:11%;"><b>-l lang</b></p>
+
+<p style="margin-left:22%;">Specify the language identifier
+for the text to be copied into the clipboard. The default
+value is <i>Neutral</i>. The identifier is case insensitive.
+Specify the identifier <i>Help</i> to obtain a list of
+supported language settings.</p>
+
+<p style="margin-left:11%;"><b>-s sublang</b></p>
+
+<p style="margin-left:22%;">Specify the sub-language
+identifier for the text to be copied into the clipboard. The
+default value is <i>Default</i>. The identifier is case
+insensitive. Specify the identifier <i>Help</i> to obtain a
+list of supported sublanguage settings. Specifying a
+sublanguage setting without the corresponding language
+setting is probably not a good idea. The combination of the
+default language and sublanguage identifiers in effect
+result in the clipboard data getting marked as belonging to
+the user default language.</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="3%">
+
+
+<p><b>-g</b></p></td>
+<td width="8%"></td>
+<td width="78%">
+
+
+<p>Specify that the data to be copied into the clipboard is
+a graphics image. The program uses builtin code for loading
+8-bit portable pixmap files (files starting with the P6
+magic number), and a Windows OLE interface for loading many
+other image files. The OLE interface has been tested with
+JPEG, GIF, and BMP files.</p></td></tr>
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="3%">
+
+
+<p><b>-v</b></p></td>
+<td width="8%"></td>
+<td width="78%">
+
+
+<p>Print the program&rsquo;s version on the standard output
+and exit.</p></td></tr>
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="3%">
+
+
+<p><b>-h</b></p></td>
+<td width="8%"></td>
+<td width="78%">
+
+
+<p>Print a short help text on the program&rsquo;s operation
+on the standard output and exit.</p></td></tr>
+</table>
+
+<h2>EXAMPLE
+<a name="EXAMPLE"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">dir /b |
+winclip -c <br>
+Copies the directory list to the Windows clipboard.</p>
+
+<p style="margin-left:11%; margin-top: 1em">winclip -p
+file.txt <br>
+Saves the Windows clipboard to file.txt.</p>
+
+<p style="margin-left:11%; margin-top: 1em">winclip -p |
+perl -pe &quot;tr/[A-Z]/[a-z]/&quot; | winclip -c <br>
+Converts the contents of the Windows clipboard to
+lowercase.</p>
+
+<p style="margin-left:11%; margin-top: 1em">winclip -c -l
+Portuguese -s Portuguese_Brazilian file.txt <br>
+Copies the file file.txt to the Windows clipboard. The
+clipboard&rsquo;s contents are marked to contain text in the
+language Portuguese and sublanguage
+Portuguese_Brazilian.</p>
+
+<p style="margin-left:11%; margin-top: 1em">pygmentize -f
+rtf code.js | winclip -cr <br>
+Copies into the clipboard syntax-colored RTF generated by
+pygmentize.</p>
+
+<h2>SEE ALSO
+<a name="SEE ALSO"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">D. Spinellis.
+Outwit: Unix tool-based programming meets the Windows world.
+In <i>USENIX 2000 Technical Conference Proceedings</i>, San
+Diego, CA, USA, June 2000, USENIX Association.</p>
+
+<h2>AUTHOR
+<a name="AUTHOR"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">(C) Copyright
+1994-2005 Diomidis Spinellis. All rights reserved.</p>
+
+<p style="margin-left:11%; margin-top: 1em">Permission to
+use, copy, and distribute this software and its
+documentation for any purpose and without fee is hereby
+granted, provided that the above copyright notice appear in
+all copies and that both that copyright notice and this
+permission notice appear in supporting documentation.</p>
+
+<p style="margin-left:11%; margin-top: 1em">THIS SOFTWARE
+IS PROVIDED &lsquo;&lsquo;AS IS&rsquo;&rsquo; AND WITHOUT
+ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, WITHOUT
+LIMITATION, THE IMPLIED WARRANTIES OF MERCHANTIBILITY AND
+FITNESS FOR A PARTICULAR PURPOSE.</p>
+
+<h2>BUGS
+<a name="BUGS"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">Should handle
+more clipboard content types.</p>
+
+<p style="margin-left:11%; margin-top: 1em"><i>Winclip</i>
+may not work as expected if the code page of the console
+window it is running is different from the code page of the
+clipboard data or the code page it is specified to use. You
+can check and change a console code page using the
+<i>chcp</i> command.</p>
+
+<p style="margin-left:11%; margin-top: 1em">In operations
+involving 8-bit (non-Unicode) data, the input locale
+(that&rsquo;s right, the active keyboard translation) in
+effect at the time the text is placed in the clipboard
+determines the character set associated with the clipboard
+data. Therefore, if you want to associate a Tamil or Greek
+code page with the clipboard data, ensure that you have
+correctly set the active keyboard type at the time you copy
+the data.</p>
+<hr>
+</body>
+</html>

@@ -1,0 +1,198 @@
+
+
+
+DOCPROP(1)					       DOCPROP(1)
+
+
+NAME
+       docprop	-  print  properties of an OLE structured storage
+       document
+
+SYNOPSIS
+       docprop [-f format] filename  ...
+
+DESCRIPTION
+       Docprop can print the system and	 user-defined  properties
+       of  the	OLE structured storage documents specified in its
+       command line.  Document properties are typically	 used  to
+       record  document	 meta  information.   Typical  properties
+       include the document's author, title,  and  keywords.   By
+       default	docprop will output all known document properties
+       in the form:
+       Property name:value
+       Boolean values are output as TRUE or FALSE,  integers  are
+       output  in decimal, floating point numbers are output with
+       a precision of two decimal digits, absolute time values as
+       yyyy/mm/dd  hh:mm:ss,  and relative time values are output
+       in seconds.
+
+
+OPTIONS
+       -f format
+	      Specify the format of the output.	  The  format  is
+	      specified	 as  a string with embedded references to
+	      property names.  It is used to format the	 property
+	      output  for  every  document specified.  The format
+	      string can contain three types of of objects:
+
+	      1. Plain characters which are copied to the output.
+
+	      2.  Character  escapes  (\c) which are converted to
+	      the corresponding control characters and then  out-
+	      put.  The following escape codes are supported: \a,
+	      \b, \f, \t, \r, \n, \v, \\.
+
+	      3. Names of system or user-defined  property  names
+	      enclosed in braces; these are replaced by the value
+	      of the corresponding property.
+
+	      The following system-defined  property  values  are
+	      supported:
+	      AppName
+	      Author
+	      Bytes
+	      Category
+	      Char Count
+	      Comments
+	      Company
+	      Created
+	      Doc Security
+	      Edit Time
+
+
+
+			 26 January 2000			1
+
+
+
+
+
+DOCPROP(1)					       DOCPROP(1)
+
+
+	      HeadingPairs
+	      HiddenSlides
+	      Keywords
+	      Last Saved
+	      Last printed
+	      LastAuthor
+	      Lines
+	      LinksUpToDate
+	      MMClips
+	      Manager
+	      Notes
+	      Page Count
+	      Paragraphs
+	      PresentationTarget
+	      Revision Number
+	      ScaleCrop
+	      Slides
+	      Subject
+	      Template
+	      Thumpnail
+	      Title
+	      TitlesofParts
+	      Word Count
+
+
+EXAMPLE
+       The following will print the document name and author name
+       of all Word documents in a directory:
+       docprop -f '{Filename}{Author}\n' *.doc
+
+
+SEE ALSO
+       D. Spinellis.  Outwit: Unix tool-based  programming  meets
+       the  Windows  world.   In USENIX 2000 Technical Conference
+       Proceedings, San Diego, CA, USA, June 2000, USENIX Associ-
+       ation.
+
+
+AUTHOR
+       (C)  Copyright  1999, 2000 Diomidis Spinellis.  All rights
+       reserved.
+
+       Permission to use, copy, and distribute this software  and
+       its  documentation  for	any  purpose  and  without fee is
+       hereby granted, provided that the above	copyright  notice
+       appear  in  all copies and that both that copyright notice
+       and this permission notice appear in supporting documenta-
+       tion.
+
+       THIS  SOFTWARE  IS  PROVIDED  ``AS  IS''	 AND  WITHOUT ANY
+       EXPRESS OR IMPLIED WARRANTIES, INCLUDING, WITHOUT  LIMITA-
+       TION,  THE  IMPLIED WARRANTIES OF MERCHANTIBILITY AND FIT-
+       NESS FOR A PARTICULAR PURPOSE.
+
+
+
+
+			 26 January 2000			2
+
+
+
+
+
+DOCPROP(1)					       DOCPROP(1)
+
+
+BUGS
+       The IPropertyStorage  and  IPropertySetStorage  interfaces
+       used  by	 docprop were not defined in the original release
+       of COM; thus docprop requires one of  the  following  sys-
+       tems:
+
+       o      Windows NT 4.0 or later
+
+       o      Windows 98 or later
+
+       o      Windows  95  with	 Internet Explorer version 4.0 or
+	      later
+
+       o      Windows 95 with DCOM installed
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+			 26 January 2000			3
+
+

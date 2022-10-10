@@ -1,0 +1,53 @@
+READLINK(1)		    General Commands Manual		   READLINK(1)
+
+
+
+1mNAME0m
+       readlink - resolve shell shortcuts
+
+1mSYNOPSIS0m
+       1mreadlink 4m22mlink_file0m
+
+1mDESCRIPTION0m
+       4mReadlink24m  will  resolve  Windows  shell  links (shortcuts).	 Its single
+       mandatory argument must be a Windows shortcut.  4mReadlink24m  will  resolve
+       the shortcut's target and display it on its standard output.  Note that
+       if a shortcut's target is changed  (moved,  renamed,  deleted)  Windows
+       will attempt to locate the file using a set of heuristics.  As 4mreadlink0m
+       uses the Windows API for resolving shortcuts it will also try to locate
+       targets.	 provied text-based accedd to the Windows registry.
+
+
+1mOPTIONS0m
+       None.
+
+
+1mEXAMPLE0m
+       readlink shortcut.lnk
+       will display the shortcut's target file.
+
+1mSEE ALSO0m
+       D.  Spinellis.	Outwit:	 Unix tool-based programming meets the Windows
+       world.  In 4mUSENIX24m 4m200024m 4mTechnical24m 4mConference24m 4mProceedings24m, pages 149-158,
+       San Diego, CA, USA, June 2000, USENIX Association.
+
+
+1mAUTHOR0m
+       (C) Copyright 1999, 2000 Diomidis Spinellis.  All rights reserved.
+
+       Permission  to use, copy, and distribute this software and its documen-
+       tation for any purpose and without fee is hereby granted, provided that
+       the  above  copyright  notice  appear  in all copies and that both that
+       copyright notice and this permission notice appear in supporting	 docu-
+       mentation.
+
+       THIS  SOFTWARE IS PROVIDED ``AS IS'' AND WITHOUT ANY EXPRESS OR IMPLIED
+       WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE  IMPLIED	WARRANTIES  OF
+       MERCHANTIBILITY AND FITNESS FOR A PARTICULAR PURPOSE.
+
+1mBUGS0m
+       Links to special Windows folders will produce no output.
+
+
+
+				 20 June 2003			   READLINK(1)

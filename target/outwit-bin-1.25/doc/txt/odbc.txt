@@ -1,0 +1,81 @@
+ODBC(1)			    General Commands Manual		       ODBC(1)
+
+
+
+1mNAME0m
+       odbc - provide ODBC-based database access
+
+1mSYNOPSIS0m
+       1modbc 22m[1m-v22m] [1m-R 4m22mRS24m] [1m-F 4m22mFS24m] [1m-h22m] [1m-n 4m22mnull24m] 4mDRVC24m 4mstmt0m
+
+1mDESCRIPTION0m
+       4mOdbc24m  prints  the  results of an 4mSQL24m 4mselect24m command run on any database
+       for which an appropriate data source has been defined.	Two  arguments
+       must  always  be	 specified  as	part  of the 4modbc24m invocation: the data
+       source driver connection string, and an SQL select statement.  All data
+       types are currently output as text according to the default driver-sup-
+       plied data conversions.	By default fields are separated	 by   the  tab
+       character  and  records	by  a newline.	The select statement specified
+       must conform to the syntax and conventions used by the  database	 being
+       accessed.
+
+       The  driver  connection	string	can either specify a registered system
+       data source driver name, as in:
+	       "DSN=registered_dsn_name;uid=myusername;pwd=mypassword"
+       or directly a driver, as in:
+	       "Driver={Microsoft Access Driver (*.mdb)};DBQ=c:\db\myfile.mdb"
+       Data source drivers are typically configured through the control	 panel
+       (ODBC category or through the Administrative Tools menu).
+
+
+1mOPTIONS0m
+       1m-R RS	22mSpecify  the record separator used to delimit records on output.
+	      The default record separator is a newline.
+
+       1m-F FS	22mSpecify the field separator used to delimit	fields	on  output.
+	      The default field separator is a tab.
+
+       1m-h	22mThe first line of the output will contain the name of each data-
+	      base field.
+
+       1m-n null0m
+	      Specify the value to print when encountering a null  value.   By
+	      default nothing is printed.
+
+
+1mEXAMPLE0m
+       mail `odbc DSN=userDB "select email from users"` <message
+       Extracts	 the email address from all records from the table 4musers24m which
+       is part of the database 4muserDB24m and	sends  them  the  file	4mmessage24m  by
+       email.
+
+1mSEE ALSO0m
+       D.  Spinellis.	Outwit:	 Unix tool-based programming meets the Windows
+       world.  In 4mUSENIX24m 4m200024m 4mTechnical24m 4mConference24m 4mProceedings24m, San Diego, CA,
+       USA, June 2000, USENIX Association.
+       International  Organization  for	 Standardization, Geneva, Switzerland.
+       4mInformation24m 4mtechnology24m 4m--24m 4mDatabase24m 4mlanguages24m 4m--24m 4mSQL24m 4m--24m  4mPart24m  4m3:24m  4mCall-0m
+       4mLevel24m 4mInterface24m 4m(SQL/CLI)24m, 1995.	ISO/IEC 9075-3:1995.
+       Microsoft Developer Network Library, ODBC API Reference, the `Comments'
+       section of the 4mSQLDriverConnect24m function.
+
+1mAUTHOR0m
+       (C) Copyright 1999-2003 Diomidis Spinellis.  All rights reserved.
+
+       Permission to use, copy, and distribute this software and its  documen-
+       tation for any purpose and without fee is hereby granted, provided that
+       the above copyright notice appear in all	 copies	 and  that  both  that
+       copyright  notice and this permission notice appear in supporting docu-
+       mentation.
+
+       THIS SOFTWARE IS PROVIDED ``AS IS'' AND WITHOUT ANY EXPRESS OR  IMPLIED
+       WARRANTIES,  INCLUDING,	WITHOUT	 LIMITATION, THE IMPLIED WARRANTIES OF
+       MERCHANTIBILITY AND FITNESS FOR A PARTICULAR PURPOSE.
+
+1mBUGS0m
+       The presentation of results in textual format depends on the  implemen-
+       tation of the ODBC driver.
+
+
+
+				2 December 2003			       ODBC(1)

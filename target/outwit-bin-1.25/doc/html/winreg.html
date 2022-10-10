@@ -1,0 +1,368 @@
+<!-- Creator     : groff version 1.22.3 -->
+<!-- CreationDate: Sat Apr  4 19:26:52 2015 -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta name="generator" content="groff -Thtml, see www.gnu.org">
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<meta name="Content-Style" content="text/css">
+<style type="text/css">
+       p       { margin-top: 0; margin-bottom: 0; vertical-align: top }
+       pre     { margin-top: 0; margin-bottom: 0; vertical-align: top }
+       table   { margin-top: 0; margin-bottom: 0; vertical-align: top }
+       h1      { text-align: center }
+</style>
+<title>WINREG</title>
+
+</head>
+<body>
+
+<h1 align="center">WINREG</h1>
+
+<a href="#NAME">NAME</a><br>
+<a href="#SYNOPSIS">SYNOPSIS</a><br>
+<a href="#DESCRIPTION">DESCRIPTION</a><br>
+<a href="#OPTIONS">OPTIONS</a><br>
+<a href="#EXAMPLE">EXAMPLE</a><br>
+<a href="#SEE ALSO">SEE ALSO</a><br>
+<a href="#AUTHOR">AUTHOR</a><br>
+<a href="#BUGS">BUGS</a><br>
+
+<hr>
+
+
+<h2>NAME
+<a name="NAME"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">winreg -
+text-based access to the Windows registry</p>
+
+<h2>SYNOPSIS
+<a name="SYNOPSIS"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em"><b>winreg</b>
+[<b>-F</b> <i>FS</i>] [<b>-r</b> <i>name</i>]
+[<b>-ntvci</b>] [<i>key</i>]</p>
+
+<h2>DESCRIPTION
+<a name="DESCRIPTION"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em"><i>Winreg</i>
+provides text-based access to the Windows registry. Running
+<i>winreg</i> with a registry key specified as part of its
+invocation will result in all the registry tree from that
+point downwards to be printed on its standard output. By
+default for every registry key <i>winreg</i> will print its
+name, type, and value. When <i>winreg</i> is run without
+specifying a registry key it will read registry data
+formatted in the same way as its default output format and
+set (update or create) the corresponding registry
+values.</p>
+
+<p style="margin-left:11%; margin-top: 1em">The following
+lines describe the default registry data format read and
+written by <i>winreg</i> for each defined registry data
+type. <i>Winreg</i> will not process data types other than
+the ones described. <br>
+REG_BINARY</p>
+
+<p style="margin-left:22%;"><i>Winreg</i> will print the
+word BINARY followed by the data bytes as
+character-separated two digit hexadecimal values.</p>
+
+<p style="margin-left:11%;">REG_DWORD</p>
+
+<p style="margin-left:22%;"><i>Winreg</i> will print the
+word DWORD followed by the value using eight hexadecimal
+digits.</p>
+
+<p style="margin-left:11%;">REG_DWORD_BIG_ENDIAN</p>
+
+<p style="margin-left:22%;"><i>Winreg</i> will print the
+word DWORD_BIG_ENDIAN followed by the value using eight
+hexadecimal digits. The value&rsquo;s digits are printed so
+as to represent a base16 number, i.e. the number 1 is
+printed as 00000001, not 00010000.</p>
+
+<p style="margin-left:11%;">REG_QWORD</p>
+
+<p style="margin-left:22%;"><i>Winreg</i> will print the
+word QWORD followed by the value using 16 hexadecimal
+digits.</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="9%">
+
+
+<p>REG_SZ</p></td>
+<td width="2%"></td>
+<td width="78%">
+
+
+<p><i>Winreg</i> will print the word SZ followed by the
+value as a string with escape codes used for non-printable
+characters.</p> </td></tr>
+</table>
+
+<p style="margin-left:11%;">REG_MULTI_SZ</p>
+
+<p style="margin-left:22%;"><i>Winreg</i> will print the
+word MULTI_SZ followed by the value as a string with escape
+codes used for non-printable characters.</p>
+
+<p style="margin-left:11%;">REG_EXPAND_SZ</p>
+
+<p style="margin-left:22%;"><i>Winreg</i> will print the
+word EXPAND_SZ followed by the value as a string with escape
+codes used for non-printable characters.</p>
+
+<p style="margin-left:11%;">REG_NONE</p>
+
+<p style="margin-left:22%;"><i>Winreg</i> will print the
+word NONE without any trailing data. A field separator will
+be printed.</p>
+
+<p style="margin-left:11%;">REG_LINK</p>
+
+<p style="margin-left:22%;"><i>Winreg</i> will print the
+word LINK followed by the data bytes as character-separated
+two digit hexadecimal values.</p>
+
+<p style="margin-left:11%;">REG_RESOURCE_LIST</p>
+
+<p style="margin-left:22%;"><i>Winreg</i> will print the
+word RESOURCE_LIST followed by the data bytes as
+character-separated two digit hexadecimal values.</p>
+
+
+<p style="margin-left:11%;">REG_RESOURCE_REQUIREMENTS_LIST</p>
+
+<p style="margin-left:22%;"><i>Winreg</i> will print the
+word RESOURCE_REQUIREMENTS_LIST followed by the data bytes
+as character-separated two digit hexadecimal values.</p>
+
+
+<p style="margin-left:11%;">REG_FULL_RESOURCE_DESCRIPTOR</p>
+
+<p style="margin-left:22%;"><i>Winreg</i> will print the
+word FULL_RESOURCE_DESCRIPTOR followed by the data bytes as
+character-separated two digit hexadecimal values.</p>
+
+<p style="margin-left:11%; margin-top: 1em">When printing
+string values \<i>character</i> escape codes are used for
+the characters \, \a, \b, \f, \t, \r, \n, \v, \0
+representing the corresponding values as defined by the C
+programming language. All other non-printable characters (as
+defined by the C <i>isprint</i> function) are represented
+using the sequence <i>\x</i> followed by two digit
+hexadecimals.</p>
+
+<p style="margin-left:11%; margin-top: 1em">A commonly used
+idiom involves processing Windows registry data as the
+output of <i>winreg</i> using Unix tools like <i>sed</i> and
+<i>awk</i> and redirecting their output back to the registry
+via <i>winreg</i>.</p>
+
+<h2>OPTIONS
+<a name="OPTIONS"></a>
+</h2>
+
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="7%">
+
+
+<p style="margin-top: 1em"><b>-F FS</b></p></td>
+<td width="4%"></td>
+<td width="78%">
+
+
+<p style="margin-top: 1em">Specify the field separator used
+to delimit fields (registry key name, type, value) on
+output. The default field separator is a tab.</p></td></tr>
+</table>
+
+<p style="margin-left:11%;"><b>-r name</b></p>
+
+<p style="margin-left:22%;">Connect to the registry of the
+remote machine <b>name</b>, instead of the local registry.
+Data will be retrieved from and stored to the remote
+registry. Appropriate permissions must be establshed and
+services be running; see http://msdn.microsoft.com/library/-
+default.%asp?url=/library/en-us/sysinfo/base/-
+regconnectregistry.asp. The name can be a Netbios name
+(\\<i>host</i>), a Netbios IP-address
+(\\<i>192.168.1.2</i>), a Netbios fully qualified domain
+name (\\<i>host.company.com</i>), an Internet host name
+(\\<i>host</i>), an Internet host IP-address
+(\\<i>192.168.1.2</i>), or an Internet host fully qualified
+domain name (\\<i>host.company.- com</i>).</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="3%">
+
+
+<p><b>-n</b></p></td>
+<td width="8%"></td>
+<td width="78%">
+
+
+<p>Do not print key names.</p></td></tr>
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="3%">
+
+
+<p><b>-t</b></p></td>
+<td width="8%"></td>
+<td width="78%">
+
+
+<p>Do not print key types.</p></td></tr>
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="3%">
+
+
+<p><b>-v</b></p></td>
+<td width="8%"></td>
+<td width="78%">
+
+
+<p>Do not print key values.</p></td></tr>
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="3%">
+
+
+<p><b>-i</b></p></td>
+<td width="8%"></td>
+<td width="78%">
+
+
+<p>Ignore errors returned by Windows registry operations.
+The error code will be printed on the standard output, but
+the program will attempt to continue processing.</p></td></tr>
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="3%">
+
+
+<p><b>-d</b></p></td>
+<td width="8%"></td>
+<td width="78%">
+
+
+<p>Output DWORD and binary data of 1, 2, and 4 bytes in
+decimal. This can be used to extract performance data (found
+under HKEY_PERFORMANCE_DATA) in a format that can be used by
+other analysis tools. Decimal output can not be parsed-back
+for setting registry values.</p></td></tr>
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="3%">
+
+
+<p><b>-c</b></p></td>
+<td width="8%"></td>
+<td width="78%">
+
+
+<p>Check input by parsing it and print any errors found. No
+registry keys will be created or modified.</p></td></tr>
+</table>
+
+<h2>EXAMPLE
+<a name="EXAMPLE"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">winreg -nt
+HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\ComputerName\ComputerName
+<br>
+will display a machine&rsquo;s name.</p>
+
+<p style="margin-left:11%; margin-top: 1em">winreg
+HKEY_CURRENT_USER | sed -n
+&rsquo;s,C:/home,D:/home,gp&rsquo; | winreg <br>
+Change all user registry references from c:/home to
+d:/home.</p>
+
+<p style="margin-left:11%; margin-top: 1em">winreg -r
+\\pooh HKEY_LOCAL_MACHINE\Software\Netscape | winreg -r
+\\piglet <br>
+Copy the Netscape machine-specific software settings from
+the registry of the machine <i>poo</i> to the registry of
+the machine <i>piglet</i>.</p>
+
+<h2>SEE ALSO
+<a name="SEE ALSO"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">D. Spinellis.
+Outwit: Unix tool-based programming meets the Windows world.
+In <i>USENIX 2000 Technical Conference Proceedings</i>,
+pages 149-158, San Diego, CA, USA, June 2000, USENIX
+Association. <br>
+Microsoft Corporation. <i>Microsoft Windows NT Server 4.0
+Resource Kit</i>. Microsoft Press. <br>
+Ron Petrusha and Andrew Schulman. <i>Inside the Windows 95
+Registry</i>. O&rsquo;Reilly &amp; Associates.</p>
+
+<h2>AUTHOR
+<a name="AUTHOR"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">(C) Copyright
+1999-2003 Diomidis Spinellis. All rights reserved.</p>
+
+<p style="margin-left:11%; margin-top: 1em">Permission to
+use, copy, and distribute this software and its
+documentation for any purpose and without fee is hereby
+granted, provided that the above copyright notice appear in
+all copies and that both that copyright notice and this
+permission notice appear in supporting documentation.</p>
+
+<p style="margin-left:11%; margin-top: 1em">THIS SOFTWARE
+IS PROVIDED &lsquo;&lsquo;AS IS&rsquo;&rsquo; AND WITHOUT
+ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, WITHOUT
+LIMITATION, THE IMPLIED WARRANTIES OF MERCHANTIBILITY AND
+FITNESS FOR A PARTICULAR PURPOSE.</p>
+
+<h2>BUGS
+<a name="BUGS"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">Although
+reasonable care has been taken to make <i>winreg</i> work
+with many possible types of registry data, note that
+incorrect operation by <i>winreg</i> or inappropriate
+registry data manipulations can render a machine
+unusable.</p>
+
+<p style="margin-left:11%; margin-top: 1em">At least under
+Windows 2000 SP2, a failed remote connection is not
+correctly reported by the Windows API, and may cause the
+program to display wrong data or silently fail.</p>
+<hr>
+</body>
+</html>

@@ -1,0 +1,195 @@
+<!-- Creator     : groff version 1.22.3 -->
+<!-- CreationDate: Sat Apr  4 19:26:50 2015 -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta name="generator" content="groff -Thtml, see www.gnu.org">
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<meta name="Content-Style" content="text/css">
+<style type="text/css">
+       p       { margin-top: 0; margin-bottom: 0; vertical-align: top }
+       pre     { margin-top: 0; margin-bottom: 0; vertical-align: top }
+       table   { margin-top: 0; margin-bottom: 0; vertical-align: top }
+       h1      { text-align: center }
+</style>
+<title>ODBC</title>
+
+</head>
+<body>
+
+<h1 align="center">ODBC</h1>
+
+<a href="#NAME">NAME</a><br>
+<a href="#SYNOPSIS">SYNOPSIS</a><br>
+<a href="#DESCRIPTION">DESCRIPTION</a><br>
+<a href="#OPTIONS">OPTIONS</a><br>
+<a href="#EXAMPLE">EXAMPLE</a><br>
+<a href="#SEE ALSO">SEE ALSO</a><br>
+<a href="#AUTHOR">AUTHOR</a><br>
+<a href="#BUGS">BUGS</a><br>
+
+<hr>
+
+
+<h2>NAME
+<a name="NAME"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">odbc -
+provide ODBC-based database access</p>
+
+<h2>SYNOPSIS
+<a name="SYNOPSIS"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em"><b>odbc</b>
+[<b>-v</b>] [<b>-R</b> <i>RS</i>]
+[<b>-F</b> <i>FS</i>] [<b>-h</b>]
+[<b>-n</b> <i>null</i>] <i>DRVC stmt</i></p>
+
+<h2>DESCRIPTION
+<a name="DESCRIPTION"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em"><i>Odbc</i>
+prints the results of an <i>SQL select</i> command run on
+any database for which an appropriate data source has been
+defined. Two arguments must always be specified as part of
+the <i>odbc</i> invocation: the data source driver
+connection string, and an SQL select statement. All data
+types are currently output as text according to the default
+driver-supplied data conversions. By default fields are
+separated by the tab character and records by a newline. The
+select statement specified must conform to the syntax and
+conventions used by the database being accessed.</p>
+
+<p style="margin-left:11%; margin-top: 1em">The driver
+connection string can either specify a registered system
+data source driver name, as in: <br>
+
+&quot;DSN=registered_dsn_name;uid=myusername;pwd=mypassword&quot;
+<br>
+or directly a driver, as in: <br>
+&quot;Driver={Microsoft Access Driver
+(*.mdb)};DBQ=c:\db\myfile.mdb&quot; <br>
+Data source drivers are typically configured through the
+control panel (ODBC category or through the Administrative
+Tools menu).</p>
+
+<h2>OPTIONS
+<a name="OPTIONS"></a>
+</h2>
+
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="7%">
+
+
+<p style="margin-top: 1em"><b>-R RS</b></p></td>
+<td width="4%"></td>
+<td width="78%">
+
+
+<p style="margin-top: 1em">Specify the record separator
+used to delimit records on output. The default record
+separator is a newline.</p></td></tr>
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="7%">
+
+
+<p><b>-F FS</b></p></td>
+<td width="4%"></td>
+<td width="78%">
+
+
+<p>Specify the field separator used to delimit fields on
+output. The default field separator is a tab.</p></td></tr>
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="7%">
+
+
+<p><b>-h</b></p></td>
+<td width="4%"></td>
+<td width="78%">
+
+
+<p>The first line of the output will contain the name of
+each database field.</p></td></tr>
+</table>
+
+<p style="margin-left:11%;"><b>-n null</b></p>
+
+<p style="margin-left:22%;">Specify the value to print when
+encountering a null value. By default nothing is
+printed.</p>
+
+<h2>EXAMPLE
+<a name="EXAMPLE"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">mail
+&lsquo;odbc DSN=userDB &quot;select email from
+users&quot;&lsquo; &lt;message <br>
+Extracts the email address from all records from the table
+<i>users</i> which is part of the database <i>userDB</i> and
+sends them the file <i>message</i> by email.</p>
+
+<h2>SEE ALSO
+<a name="SEE ALSO"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">D. Spinellis.
+Outwit: Unix tool-based programming meets the Windows world.
+In <i>USENIX 2000 Technical Conference Proceedings</i>, San
+Diego, CA, USA, June 2000, USENIX Association. <br>
+International Organization for Standardization, Geneva,
+Switzerland. <i>Information technology &mdash; Database
+languages &mdash; SQL &mdash; Part 3: Call-Level Interface
+(SQL/CLI)</i>, 1995. ISO/IEC 9075-3:1995. <br>
+Microsoft Developer Network Library, ODBC API Reference, the
+&lsquo;Comments&rsquo; section of the
+<i>SQLDriverConnect</i> function.</p>
+
+<h2>AUTHOR
+<a name="AUTHOR"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">(C) Copyright
+1999-2003 Diomidis Spinellis. All rights reserved.</p>
+
+<p style="margin-left:11%; margin-top: 1em">Permission to
+use, copy, and distribute this software and its
+documentation for any purpose and without fee is hereby
+granted, provided that the above copyright notice appear in
+all copies and that both that copyright notice and this
+permission notice appear in supporting documentation.</p>
+
+<p style="margin-left:11%; margin-top: 1em">THIS SOFTWARE
+IS PROVIDED &lsquo;&lsquo;AS IS&rsquo;&rsquo; AND WITHOUT
+ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, WITHOUT
+LIMITATION, THE IMPLIED WARRANTIES OF MERCHANTIBILITY AND
+FITNESS FOR A PARTICULAR PURPOSE.</p>
+
+<h2>BUGS
+<a name="BUGS"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">The
+presentation of results in textual format depends on the
+implementation of the ODBC driver.</p>
+<hr>
+</body>
+</html>

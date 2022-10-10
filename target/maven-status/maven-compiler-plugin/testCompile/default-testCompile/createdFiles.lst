@@ -1,0 +1,8 @@
+com\CabdiagTest.class
+com\WindowsBufferTest.class
+com\FormatTest.class
+com\FormatDaemonTest.class
+com\IncludedJdkExecutorTest.class
+com\StringIOConverterTest.class
+com\DefaultJdkExecutorTest.class
+com\CabdiagFormatterTest.class

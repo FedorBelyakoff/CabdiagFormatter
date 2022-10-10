@@ -1,0 +1,312 @@
+<!-- Creator     : groff version 1.22.3 -->
+<!-- CreationDate: Sat Apr  4 19:26:54 2015 -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta name="generator" content="groff -Thtml, see www.gnu.org">
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<meta name="Content-Style" content="text/css">
+<style type="text/css">
+       p       { margin-top: 0; margin-bottom: 0; vertical-align: top }
+       pre     { margin-top: 0; margin-bottom: 0; vertical-align: top }
+       table   { margin-top: 0; margin-bottom: 0; vertical-align: top }
+       h1      { text-align: center }
+</style>
+<title>READLOG</title>
+
+</head>
+<body>
+
+<h1 align="center">READLOG</h1>
+
+<a href="#NAME">NAME</a><br>
+<a href="#SYNOPSIS">SYNOPSIS</a><br>
+<a href="#DESCRIPTION">DESCRIPTION</a><br>
+<a href="#OPTIONS">OPTIONS</a><br>
+<a href="#EXAMPLE">EXAMPLE</a><br>
+<a href="#SEE ALSO">SEE ALSO</a><br>
+<a href="#AUTHOR">AUTHOR</a><br>
+<a href="#BUGS">BUGS</a><br>
+
+<hr>
+
+
+<h2>NAME
+<a name="NAME"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">readlog -
+text-based access to the Windows event log</p>
+
+<h2>SYNOPSIS
+<a name="SYNOPSIS"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em"><b>readlog</b>
+[<b>-t</b> <i>fmt</i>] [<b>-v</b> <i>srv</i>]
+[<b>-riuwsycabdn</b>] [<i>source ...</i>]</p>
+
+<h2>DESCRIPTION
+<a name="DESCRIPTION"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em"><i>Readlog</i>
+provides text-based access to the Windows event log. It can
+thus be used to textually process the data that is normaly
+seen through the Windows <i>event viewer</i> program.
+Running <i>readlog</i> without any options will generate a
+listing of the <i>System</i> event log in a format
+remininscent of the Unix <i>syslogd</i> log files such as
+the following: <br>
+Apr 20 08:35:28 SEAGULL Srv: -: Warning: The C: disk is at
+or near capacity. You may need to delete some files. <br>
+By default each entry contains the time, the computer name,
+the application name, the log message category (where
+available), the log message type (error, warning,
+information, audit success, or audit failure), and the the
+error message. Under Windows the event log does not contain
+the actual messages, but pointers to files that contain
+pre-compiled message strings. Failure to obtain such a
+message string will result in an error message, but
+<i>readlog</i> will continue its operation displaying the
+message code.</p>
+
+<p style="margin-left:11%; margin-top: 1em">Without any
+parameters <i>readlog</i> will print the contents of the
+<i>System</i> event log. Windows systems typically also
+contain <i>Application</i> and <i>Security</i> logs. In
+addition, applications can install other custom log files.
+You can see the files available on your system in the
+registry under the
+HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Eventlog
+branch. One or more event log files can be specified as
+arguments to <i>readlog</i>.</p>
+
+<h2>OPTIONS
+<a name="OPTIONS"></a>
+</h2>
+
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="9%">
+
+
+<p style="margin-top: 1em"><b>-f fmt</b></p></td>
+<td width="2%"></td>
+<td width="78%">
+
+
+<p style="margin-top: 1em">Specify the format to display
+the event generation time using the <i>strftime(3)</i>
+escape sequences.</p></td></tr>
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="9%">
+
+
+<p><b>-v src</b></p></td>
+<td width="2%"></td>
+<td width="78%">
+
+
+<p>Specify the server name from which to obtain the event
+log as a UNC name.</p></td></tr>
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="9%">
+
+
+<p><b>-r</b></p></td>
+<td width="2%"></td>
+<td width="78%">
+
+
+<p>Print entries in reverse chronological order starting
+from the latest entry and going back in time.</p></td></tr>
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="9%">
+
+
+<p><b>-i</b></p></td>
+<td width="2%"></td>
+<td width="78%">
+
+
+<p>Output the decimal event id.</p></td></tr>
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="9%">
+
+
+<p><b>-u</b></p></td>
+<td width="2%"></td>
+<td width="78%">
+
+
+<p>Do not print user information; normally user information
+is printed using the <i>domain\user</i> convention.</p></td></tr>
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="9%">
+
+
+<p><b>-w</b></p></td>
+<td width="2%"></td>
+<td width="78%">
+
+
+<p>Do not print the workstation name.</p></td></tr>
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="9%">
+
+
+<p><b>-s</b></p></td>
+<td width="2%"></td>
+<td width="78%">
+
+
+<p>Do not print the event source.</p></td></tr>
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="9%">
+
+
+<p><b>-y</b></p></td>
+<td width="2%"></td>
+<td width="78%">
+
+
+<p>Do not print the event type.</p></td></tr>
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="9%">
+
+
+<p><b>-c</b></p></td>
+<td width="2%"></td>
+<td width="78%">
+
+
+<p>Do not print the event category (most events have no
+categories registered, so you will in many cases just see a
+single dash).</p></td></tr>
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="9%">
+
+
+<p><b>-a</b></p></td>
+<td width="2%"></td>
+<td width="78%">
+
+
+<p>Output event-specific data as ASCII.</p></td></tr>
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="9%">
+
+
+<p><b>-b</b></p></td>
+<td width="2%"></td>
+<td width="78%">
+
+
+<p>Output event-specific data as hex bytes.</p></td></tr>
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="9%">
+
+
+<p><b>-d</b></p></td>
+<td width="2%"></td>
+<td width="78%">
+
+
+<p>Output event-specific data as hex doublewords.</p></td></tr>
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="9%">
+
+
+<p><b>-n</b></p></td>
+<td width="2%"></td>
+<td width="78%">
+
+
+<p>Format event using newline separators; normally each
+event is displayed in a single line.</p></td></tr>
+</table>
+
+<h2>EXAMPLE
+<a name="EXAMPLE"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">readlog | grep
+&quot;The Event log service was started&quot; | wc -l <br>
+can be used to count the number of system boots registered
+in the log.</p>
+
+<p style="margin-left:11%; margin-top: 1em">readlog
+Application | awk -F: &quot;/Outbound: Information: Fax
+Sent/{print $12}&quot; | sort | uniq -c | sort -rn <br>
+Create an list of fax recipients ordered by the number of
+faxes they have received.</p>
+
+<h2>SEE ALSO
+<a name="SEE ALSO"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">D. Spinellis.
+Outwit: Unix tool-based programming meets the Windows world.
+In <i>USENIX 2000 Technical Conference Proceedings</i>,
+pages 149-158, San Diego, CA, USA, June 2000, USENIX
+Association. <br>
+Microsoft Corporation. <i>Microsoft Windows NT Server 4.0
+Resource Kit</i>. Microsoft Press.</p>
+
+<h2>AUTHOR
+<a name="AUTHOR"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">(C) Copyright
+2002 Diomidis Spinellis. All rights reserved.</p>
+
+<p style="margin-left:11%; margin-top: 1em">Permission to
+use, copy, and distribute this software and its
+documentation for any purpose and without fee is hereby
+granted, provided that the above copyright notice appear in
+all copies and that both that copyright notice and this
+permission notice appear in supporting documentation.</p>
+
+<p style="margin-left:11%; margin-top: 1em">THIS SOFTWARE
+IS PROVIDED &lsquo;&lsquo;AS IS&rsquo;&rsquo; AND WITHOUT
+ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, WITHOUT
+LIMITATION, THE IMPLIED WARRANTIES OF MERCHANTIBILITY AND
+FITNESS FOR A PARTICULAR PURPOSE.</p>
+
+<h2>BUGS
+<a name="BUGS"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">Remote system
+access has not been tested.</p>
+
+<p style="margin-left:11%; margin-top: 1em">Windows event
+log messages are sometimes difficult to parse using
+text-based tools.</p>
+<hr>
+</body>
+</html>

@@ -1,0 +1,155 @@
+WINCLIP(1)		    General Commands Manual		    WINCLIP(1)
+
+
+
+1mNAME0m
+       winclip - console Windows clipboard interface
+
+1mSYNOPSIS0m
+       1mwinclip  22m[1m-h22m|1m-v22m]	[1m-w22m|1m-u22m|1m-m22m|1m-g22m|1m-r22m] [1m-b22m] [1m-l 4m22mlang24m] [1m-s 4m22msublang24m] 1m-c22m|1m-p22m|1m-i0m
+       [4mfile24m]
+
+1mDESCRIPTION0m
+       4mWinclip24m provides access to the Windows clipboard from a console or	MS-
+       DOS  window.   Its  operation  depends on its mandatory argument.  When
+       executed with the -p (paste) argument it pastes the  Windows  clipboard
+       to  its standard output or to the 4mfile24m optionally specified in the com-
+       mand line.  The 4mwinclip24m output may be redirected to a file	(using	the
+       shell  > syntax) or to another process (using the shell | pipeline syn-
+       tax).  When 4mwinclip24m is executed with the -c (copy) argument	 it  copies
+       its  standard  input  (or  the 4mfile24m optionally specified in the command
+       line) to the Windows clipboard.	Again, 4mwinclip24m input may be redirected
+       to  be  read  from  a  file (using the < shell syntax), or from another
+       process of a pipeline.  Finally, when 4mwinclip24m is executed with  the	 -i
+       (information)  argument	it  will print on its standard output all data
+       formats that can be retrieved from the clipboard.
+
+       4mWinclip24m can currently paste text clipboard data,  filenames	 that  have
+       been  copied  in	 the Windows explorer, and bitmaps which are pasted in
+       binary 4mppm24m format.	When tranfering text, it will automatically perform
+       the  appropriate	 Windows  to console character code (OEM) set transla-
+       tions.  4mWinclip24m is an Intel architecture Win32 program that only  works
+       under the Intel processor versions of Windows NT, 95, 98, Me, 2000, XP.
+
+1mOPTIONS0m
+       1m-c	22mCopy the standard input to the Windows clipboard.
+
+       1m-p	22mCopy the Windows clipboard contents to the standard output.
+
+       1m-i	22mPrint  on  the standard output the data formats available in the
+	      clipboard.  Each format is displayed on a	 separate  line.   The
+	      standard	clipboard  formats are printed using their Windows API
+	      CF_ names; all other formats are printed using their  registered
+	      name.
+
+       1m-w	22mTransfer  text in the Windows-native format (CF_TEXT) instead of
+	      the (default) DOS-native format (CF_OEMTEXT).  The Windows  for-
+	      mat  is  also  known  as ANSI text, but often represents another
+	      Windows and locale-specific code page.  Setting this option will
+	      affect  how  non-ASCII  characters will be encoded for clipboard
+	      text and copied file icons.
+
+       1m-u	22mTransfer text in Unicode format (CF_UNICODETEXT) instead of	the
+	      (default)	 DOS-native format (CF_OEMTEXT).  The Unicode encoding
+	      is the same as the one used by the Windows clipboard: apparently
+	      UCS-16  in  little-endian	 byte  order (UTF-16LE).  Setting this
+	      option will affect how non-ASCII characters will be encoded  for
+	      clipboard text and copied file icons.
+
+       1m-m	22mTransfer  text in Unicode format (CF_UNICODETEXT) instead of the
+	      (default) DOS-native format (CF_OEMTEXT).	 The Unicode  encoding
+	      is UTF-8.	 Setting this option will affect how non-ASCII charac-
+	      ters will be encoded for clipboard text and copied file icons.
+
+       1m-r	22mCopy into the clipboard text specified to be in rich text format
+	      (RTF).
+
+       1m-b	22mWhen	 outputing Unicode text, prepend a byte order mark (BOM) at
+	      the beginning.  This may make it easier for other tools to  rec-
+	      ognize 4mwinclip24m's output format.  When reading data for the clip-
+	      board, automatically detect Unicode data, and set	 the  encoding
+	      and endianess, if a byte-order-mark is detected.
+
+       1m-l lang0m
+	      Specify  the  language identifier for the text to be copied into
+	      the clipboard.  The default value is 4mNeutral24m.  The identifier is
+	      case  insensitive.  Specify the identifier 4mHelp24m to obtain a list
+	      of supported language settings.
+
+       1m-s sublang0m
+	      Specify the sub-language identifier for the text	to  be	copied
+	      into  the clipboard.  The default value is 4mDefault24m.	The identi-
+	      fier is case insensitive.	 Specify the identifier 4mHelp24m to obtain
+	      a	 list of supported sublanguage settings.  Specifying a sublan-
+	      guage setting without  the  corresponding	 language  setting  is
+	      probably	not  a good idea.  The combination of the default lan-
+	      guage and sublanguage identifiers in effect result in the	 clip-
+	      board  data getting marked as belonging to the user default lan-
+	      guage.
+
+       1m-g	22mSpecify that the data to be	copied	into  the  clipboard  is  a
+	      graphics image.  The program uses builtin code for loading 8-bit
+	      portable pixmap files (files starting with the P6 magic number),
+	      and  a Windows OLE interface for loading many other image files.
+	      The OLE interface has been tested with JPEG, GIF, and BMP files.
+
+       1m-v	22mPrint the program's version on the standard output and exit.
+
+       1m-h	22mPrint a short help text on the program's operation on the  stan-
+	      dard output and exit.
+
+1mEXAMPLE0m
+       dir /b | winclip -c
+       Copies the directory list to the Windows clipboard.
+
+       winclip -p file.txt
+       Saves the Windows clipboard to file.txt.
+
+       winclip -p | perl -pe "tr/[A-Z]/[a-z]/" | winclip -c
+       Converts the contents of the Windows clipboard to lowercase.
+
+       winclip -c -l Portuguese -s Portuguese_Brazilian file.txt
+       Copies  the  file  file.txt  to the Windows clipboard.  The clipboard's
+       contents are marked to contain text in the language Portuguese and sub-
+       language Portuguese_Brazilian.
+
+       pygmentize -f rtf code.js | winclip -cr
+       Copies into the clipboard syntax-colored RTF generated by pygmentize.
+
+1mSEE ALSO0m
+       D.  Spinellis.	Outwit:	 Unix tool-based programming meets the Windows
+       world.  In 4mUSENIX24m 4m200024m 4mTechnical24m 4mConference24m 4mProceedings24m, San Diego, CA,
+       USA, June 2000, USENIX Association.
+
+
+1mAUTHOR0m
+       (C) Copyright 1994-2005 Diomidis Spinellis.  All rights reserved.
+
+       Permission  to use, copy, and distribute this software and its documen-
+       tation for any purpose and without fee is hereby granted, provided that
+       the  above  copyright  notice  appear  in all copies and that both that
+       copyright notice and this permission notice appear in supporting	 docu-
+       mentation.
+
+       THIS  SOFTWARE IS PROVIDED ``AS IS'' AND WITHOUT ANY EXPRESS OR IMPLIED
+       WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE  IMPLIED	WARRANTIES  OF
+       MERCHANTIBILITY AND FITNESS FOR A PARTICULAR PURPOSE.
+
+1mBUGS0m
+       Should handle more clipboard content types.
+
+       4mWinclip24m may not work as expected if the code page of the console window
+       it is running is different from the code page of the clipboard data  or
+       the  code page it is specified to use.  You can check and change a con-
+       sole code page using the 4mchcp24m command.
+
+       In operations involving 8-bit  (non-Unicode)  data,  the	 input	locale
+       (that's	right,	the active keyboard translation) in effect at the time
+       the text is placed in the clipboard determines the character set	 asso-
+       ciated  with the clipboard data.	 Therefore, if you want to associate a
+       Tamil or Greek code page with the clipboard data, ensure that you  have
+       correctly set the active keyboard type at the time you copy the data.
+
+
+
+				 20 March 2016			    WINCLIP(1)

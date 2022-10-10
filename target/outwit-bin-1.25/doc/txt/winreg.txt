@@ -1,0 +1,173 @@
+WINREG(1)		    General Commands Manual		     WINREG(1)
+
+
+
+1mNAME0m
+       winreg - text-based access to the Windows registry
+
+1mSYNOPSIS0m
+       1mwinreg 22m[1m-F 4m22mFS24m] [1m-r 4m22mname24m] [1m-ntvci22m] [4mkey24m]
+
+1mDESCRIPTION0m
+       4mWinreg24m  provides  text-based  access  to the Windows registry.  Running
+       4mwinreg24m with a registry key specified as part  of  its  invocation  will
+       result in all the registry tree from that point downwards to be printed
+       on its standard output.	By default for every registry key 4mwinreg24m  will
+       print its name, type, and value.	 When 4mwinreg24m is run without specifying
+       a registry key it will read registry data formatted in the same way  as
+       its  default output format and set (update or create) the corresponding
+       registry values.
+
+       The following lines describe the default registry data format read  and
+       written by 4mwinreg24m for each defined registry data type.  4mWinreg24m will not
+       process data types other than the ones described.
+
+       REG_BINARY
+	      4mWinreg24m will print the word BINARY followed by the data bytes	 as
+	      character-separated two digit hexadecimal values.
+
+       REG_DWORD
+	      4mWinreg24m  will	 print	the  word DWORD followed by the value using
+	      eight hexadecimal digits.
+
+       REG_DWORD_BIG_ENDIAN
+	      4mWinreg24m will print the  word	DWORD_BIG_ENDIAN  followed  by	the
+	      value  using  eight  hexadecimal digits.	The value's digits are
+	      printed so as to represent a base16 number, i.e. the number 1 is
+	      printed as 00000001, not 00010000.
+
+       REG_QWORD
+	      4mWinreg24m  will print the word QWORD followed by the value using 16
+	      hexadecimal digits.
+
+       REG_SZ 4mWinreg24m will print the word SZ followed by the value as a  string
+	      with escape codes used for non-printable characters.
+
+       REG_MULTI_SZ
+	      4mWinreg24m  will	 print the word MULTI_SZ followed by the value as a
+	      string with escape codes used for non-printable characters.
+
+       REG_EXPAND_SZ
+	      4mWinreg24m will print the word EXPAND_SZ followed by the value as  a
+	      string with escape codes used for non-printable characters.
+
+       REG_NONE
+	      4mWinreg24m  will	 print	the word NONE without any trailing data.  A
+	      field separator will be printed.
+
+       REG_LINK
+	      4mWinreg24m will print the word LINK followed by the  data  bytes	 as
+	      character-separated two digit hexadecimal values.
+
+       REG_RESOURCE_LIST
+	      4mWinreg24m  will	 print	the word RESOURCE_LIST followed by the data
+	      bytes as character-separated two digit hexadecimal values.
+
+       REG_RESOURCE_REQUIREMENTS_LIST
+	      4mWinreg24m will print the word  RESOURCE_REQUIREMENTS_LIST  followed
+	      by  the  data bytes as character-separated two digit hexadecimal
+	      values.
+
+       REG_FULL_RESOURCE_DESCRIPTOR
+	      4mWinreg24m will print the word FULL_RESOURCE_DESCRIPTOR followed	 by
+	      the data bytes as character-separated two digit hexadecimal val-
+	      ues.
+
+       When printing string values \4mcharacter24m escape codes are  used  for	the
+       characters  \,  \a,  \b, \f, \t, \r, \n, \v, \0 representing the corre-
+       sponding values as defined by the C programming	language.   All	 other
+       non-printable  characters  (as  defined	by the C 4misprint24m function) are
+       represented using the sequence 4m\x24m followed by two digit hexadecimals.
+
+       A commonly used idiom involves processing Windows registry data as  the
+       output  of  4mwinreg24m	using  Unix  tools like 4msed24m and 4mawk24m and redirecting
+       their output back to the registry via 4mwinreg24m.
+
+
+1mOPTIONS0m
+       1m-F FS	22mSpecify the field separator used to delimit fields (registry key
+	      name,  type, value) on output.  The default field separator is a
+	      tab.
+
+       1m-r name0m
+	      Connect to the registry of the remote machine 1mname22m,	instead	 of
+	      the  local  registry.  Data will be retrieved from and stored to
+	      the remote registry.  Appropriate permissions must be establshed
+	      and services be running; see http://msdn.microsoft.com/library/-
+	      default.%asp?url=/library/en-us/sysinfo/base/-
+	      regconnectregistry.asp.	 The   name  can  be  a	 Netbios  name
+	      (\\4mhost24m), a Netbios IP-address (\\4m192.168.1.224m), a Netbios  fully
+	      qualified	 domain	 name  (\\4mhost.company.com24m),  an Internet host
+	      name (\\4mhost24m), an Internet host IP-address  (\\4m192.168.1.224m),  or
+	      an  Internet  host fully qualified domain name (\\4mhost.company.-0m
+	      4mcom24m).
+
+       1m-n	22mDo not print key names.
+
+       1m-t	22mDo not print key types.
+
+       1m-v	22mDo not print key values.
+
+       1m-i	22mIgnore errors returned  by  Windows	registry  operations.	The
+	      error  code will be printed on the standard output, but the pro-
+	      gram will attempt to continue processing.
+
+       1m-d	22mOutput DWORD and binary data of 1, 2, and 4	bytes  in  decimal.
+	      This  can	 be  used  to  extract	performance  data (found under
+	      HKEY_PERFORMANCE_DATA) in a format that can  be  used  by	 other
+	      analysis	tools.	Decimal output can not be parsed-back for set-
+	      ting registry values.
+
+       1m-c	22mCheck input by parsing it and print any errors found.   No  reg-
+	      istry keys will be created or modified.
+
+
+1mEXAMPLE0m
+       winreg  -nt HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Comput-
+       erName\ComputerName
+       will display a machine's name.
+
+       winreg HKEY_CURRENT_USER | sed -n 's,C:/home,D:/home,gp' | winreg
+       Change all user registry references from c:/home to d:/home.
+
+       winreg  -r  \\pooh  HKEY_LOCAL_MACHINE\Software\Netscape	 |  winreg  -r
+       \\piglet
+       Copy  the Netscape machine-specific software settings from the registry
+       of the machine 4mpoo24m to the registry of the machine 4mpiglet24m.
+
+1mSEE ALSO0m
+       D. Spinellis.  Outwit: Unix tool-based programming  meets  the  Windows
+       world.  In 4mUSENIX24m 4m200024m 4mTechnical24m 4mConference24m 4mProceedings24m, pages 149-158,
+       San Diego, CA, USA, June 2000, USENIX Association.
+       Microsoft Corporation.  4mMicrosoft24m 4mWindows24m 4mNT24m 4mServer24m 4m4.024m	 4mResource24m	4mKit24m.
+       Microsoft Press.
+       Ron  Petrusha  and  Andrew  Schulman.   4mInside24m 4mthe24m 4mWindows24m 4m9524m 4mRegistry24m.
+       O'Reilly & Associates.
+
+
+1mAUTHOR0m
+       (C) Copyright 1999-2003 Diomidis Spinellis.  All rights reserved.
+
+       Permission to use, copy, and distribute this software and its  documen-
+       tation for any purpose and without fee is hereby granted, provided that
+       the above copyright notice appear in all	 copies	 and  that  both  that
+       copyright  notice and this permission notice appear in supporting docu-
+       mentation.
+
+       THIS SOFTWARE IS PROVIDED ``AS IS'' AND WITHOUT ANY EXPRESS OR  IMPLIED
+       WARRANTIES,  INCLUDING,	WITHOUT	 LIMITATION, THE IMPLIED WARRANTIES OF
+       MERCHANTIBILITY AND FITNESS FOR A PARTICULAR PURPOSE.
+
+1mBUGS0m
+       Although reasonable care has been taken to make 4mwinreg24m work	 with  many
+       possible	 types of registry data, note that incorrect operation by 4mwin-0m
+       4mreg24m or inappropriate registry data manipulations can render	 a  machine
+       unusable.
+
+       At least under Windows 2000 SP2, a failed remote connection is not cor-
+       rectly reported by the Windows API, and may cause the program  to  dis-
+       play wrong data or silently fail.
+
+
+
+				7 December 2003			     WINREG(1)

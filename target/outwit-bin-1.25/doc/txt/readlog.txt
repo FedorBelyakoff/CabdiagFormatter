@@ -1,0 +1,108 @@
+READLOG(1)		    General Commands Manual		    READLOG(1)
+
+
+
+1mNAME0m
+       readlog - text-based access to the Windows event log
+
+1mSYNOPSIS0m
+       1mreadlog 22m[1m-t 4m22mfmt24m] [1m-v 4m22msrv24m] [1m-riuwsycabdn22m] [4msource24m 4m...24m]
+
+1mDESCRIPTION0m
+       4mReadlog24m  provides  text-based  access to the Windows event log.  It can
+       thus be used to textually process the data that is normaly seen through
+       the  Windows 4mevent24m 4mviewer24m program.  Running 4mreadlog24m without any options
+       will generate a listing of the 4mSystem24m event log in	a  format  reminin-
+       scent of the Unix 4msyslogd24m log files such as the following:
+       Apr  20	08:35:28  SEAGULL  Srv:	 -: Warning: The C: disk is at or near
+       capacity.  You may need to delete some files.
+       By default each entry contains the time, the computer name, the	appli-
+       cation  name,  the log message category (where available), the log mes-
+       sage type (error, warning, information, audit success, or  audit	 fail-
+       ure),  and the the error message.  Under Windows the event log does not
+       contain the actual messages, but pointers to files  that	 contain  pre-
+       compiled message strings.  Failure to obtain such a message string will
+       result in an error message, but 4mreadlog24m  will  continue  its  operation
+       displaying the message code.
+
+       Without	any  parameters	 4mreadlog24m will print the contents of the 4mSystem0m
+       event log.  Windows systems  typically  also  contain  4mApplication24m	and
+       4mSecurity24m  logs.  In addition, applications can install other custom log
+       files.  You can see the files available on your system in the  registry
+       under the HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Eventlog
+       branch.	One or more event log files can be specified as	 arguments  to
+       4mreadlog24m.
+
+1mOPTIONS0m
+       1m-f fmt 22mSpecify  the	 format	 to display the event generation time using
+	      the 4mstrftime(3)24m escape sequences.
+
+       1m-v src 22mSpecify the server name from which to obtain the event log as  a
+	      UNC name.
+
+       1m-r	22mPrint  entries  in reverse chronological order starting from the
+	      latest entry and going back in time.
+
+       1m-i	22mOutput the decimal event id.
+
+       1m-u	22mDo not print user  information;  normally  user  information	 is
+	      printed using the 4mdomain\user24m convention.
+
+       1m-w	22mDo not print the workstation name.
+
+       1m-s	22mDo not print the event source.
+
+       1m-y	22mDo not print the event type.
+
+       1m-c	22mDo  not print the event category (most events have no categories
+	      registered, so you will in many cases just see a single dash).
+
+       1m-a	22mOutput event-specific data as ASCII.
+
+       1m-b	22mOutput event-specific data as hex bytes.
+
+       1m-d	22mOutput event-specific data as hex doublewords.
+
+       1m-n	22mFormat event using newline separators; normally  each  event	 is
+	      displayed in a single line.
+
+
+1mEXAMPLE0m
+       readlog | grep "The Event log service was started" | wc -l
+       can be used to count the number of system boots registered in the log.
+
+       readlog	Application | awk -F: "/Outbound: Information: Fax Sent/{print
+       $12}" | sort | uniq -c | sort -rn
+       Create an list of fax recipients ordered by the number  of  faxes  they
+       have received.
+
+1mSEE ALSO0m
+       D.  Spinellis.	Outwit:	 Unix tool-based programming meets the Windows
+       world.  In 4mUSENIX24m 4m200024m 4mTechnical24m 4mConference24m 4mProceedings24m, pages 149-158,
+       San Diego, CA, USA, June 2000, USENIX Association.
+       Microsoft  Corporation.	 4mMicrosoft24m 4mWindows24m 4mNT24m 4mServer24m 4m4.024m 4mResource24m 4mKit24m.
+       Microsoft Press.
+
+
+1mAUTHOR0m
+       (C) Copyright 2002 Diomidis Spinellis.  All rights reserved.
+
+       Permission to use, copy, and distribute this software and its  documen-
+       tation for any purpose and without fee is hereby granted, provided that
+       the above copyright notice appear in all	 copies	 and  that  both  that
+       copyright  notice and this permission notice appear in supporting docu-
+       mentation.
+
+       THIS SOFTWARE IS PROVIDED ``AS IS'' AND WITHOUT ANY EXPRESS OR  IMPLIED
+       WARRANTIES,  INCLUDING,	WITHOUT	 LIMITATION, THE IMPLIED WARRANTIES OF
+       MERCHANTIBILITY AND FITNESS FOR A PARTICULAR PURPOSE.
+
+1mBUGS0m
+       Remote system access has not been tested.
+
+       Windows event log messages are sometimes difficult to parse using text-
+       based tools.
+
+
+
+			       19 November 2004			    READLOG(1)

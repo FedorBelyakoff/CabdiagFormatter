@@ -1,0 +1,246 @@
+
+<HTML><HEAD><TITLE>Manpage of DOCPROP</TITLE>
+</HEAD><BODY>
+<H1>DOCPROP</H1>
+Section: User Commands  (1)<BR>Updated: 26 January 2000<BR><A HREF="#index">Index</A>
+<HR>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+docprop - print properties of an OLE structured storage document
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<B>docprop</B> 
+[<B>-f</B> <I>format</I>]
+<I>filename</I>
+ ...
+<A NAME="lbAD">&nbsp;</A>
+<H2>DESCRIPTION</H2>
+
+<I>Docprop</I> 
+can print the system and user-defined properties of the OLE
+structured storage documents specified in its command line.
+Document properties are typically used to record document
+meta information.
+Typical properties include the document's author, title, and
+keywords.
+By default <I>docprop</I> will output all known document properties in the form:
+<BR>
+
+Property name:value
+<BR>
+
+Boolean values are output as TRUE or FALSE,
+integers are output in decimal,
+floating point numbers are output with a precision of two decimal digits,
+absolute time values as yyyy/mm/dd hh:mm:ss,
+and relative time values are output in seconds.
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>OPTIONS</H2>
+
+<DL COMPACT>
+<DT><B>-f</B> <I>format</I><DD>
+Specify the format of the output.
+The format is specified as a string with embedded references to property
+names.
+It is used to format the property output for every document specified.
+The format string can contain three types of of objects:
+<DT><DD>
+1. Plain characters which are copied to the output.
+<DT><DD>
+2. Character escapes (\<I>c</I>) which are converted to the corresponding
+control characters and then output.
+The following escape codes are supported:
+<I>\a, \b, \f, \t, \r, \n, \v, \\</I>.
+<DT><DD>
+3. Names of system or user-defined property names enclosed in braces;
+these are replaced by the value of the corresponding property.
+<DT><DD>
+The following system-defined property values are supported:
+<BR>
+
+AppName
+<BR>
+
+Author
+<BR>
+
+Bytes
+<BR>
+
+Category
+<BR>
+
+Char Count
+<BR>
+
+Comments
+<BR>
+
+Company
+<BR>
+
+Created
+<BR>
+
+Doc Security
+<BR>
+
+Edit Time
+<BR>
+
+HeadingPairs
+<BR>
+
+HiddenSlides
+<BR>
+
+Keywords
+<BR>
+
+Last Saved
+<BR>
+
+Last printed
+<BR>
+
+LastAuthor
+<BR>
+
+Lines
+<BR>
+
+LinksUpToDate
+<BR>
+
+MMClips
+<BR>
+
+Manager
+<BR>
+
+Notes
+<BR>
+
+Page Count
+<BR>
+
+Paragraphs
+<BR>
+
+PresentationTarget
+<BR>
+
+Revision Number
+<BR>
+
+ScaleCrop
+<BR>
+
+Slides
+<BR>
+
+Subject
+<BR>
+
+Template
+<BR>
+
+Thumpnail
+<BR>
+
+Title
+<BR>
+
+TitlesofParts
+<BR>
+
+Word Count
+
+</DL>
+<A NAME="lbAF">&nbsp;</A>
+<H2>EXAMPLE</H2>
+
+The following will print the document name and author name of all
+Word documents in a directory:
+<BR>
+
+docprop -f '{Filename}	{Author}\n' *.doc
+
+<A NAME="lbAG">&nbsp;</A>
+<H2>SEE ALSO</H2>
+
+D. Spinellis.  Outwit: Unix tool-based programming meets the Windows world.
+In <I>USENIX 2000 Technical Conference Proceedings</I>, San Diego, CA, USA,
+June 2000, USENIX Association.
+
+<A NAME="lbAH">&nbsp;</A>
+<H2>AUTHOR</H2>
+
+(C) Copyright 1999, 2000 Diomidis Spinellis.  All rights reserved.
+<P>
+
+Permission to use, copy, and distribute this software and its
+documentation for any purpose and without fee is hereby granted,
+provided that the above copyright notice appear in all copies and that
+both that copyright notice and this permission notice appear in
+supporting documentation.
+<P>
+
+THIS SOFTWARE IS PROVIDED ``AS IS'' AND WITHOUT ANY EXPRESS OR IMPLIED
+WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED WARRANTIES OF
+MERCHANTIBILITY AND FITNESS FOR A PARTICULAR PURPOSE.
+<A NAME="lbAI">&nbsp;</A>
+<H2>BUGS</H2>
+
+The IPropertyStorage and IPropertySetStorage interfaces used by <I>docprop</I>
+were not defined in the original release of COM;
+thus <I>docprop</I> requires one of the following systems:
+<DL COMPACT>
+<DT>*<DD>
+Windows NT 4.0 or later 
+<DT>*<DD>
+Windows 98 or later
+<DT>*<DD>
+Windows 95 with Internet Explorer version 4.0 or later 
+<DT>*<DD>
+Windows 95 with DCOM installed 
+<P>
+</DL>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DT><A HREF="#lbAD">DESCRIPTION</A><DD>
+<DT><A HREF="#lbAE">OPTIONS</A><DD>
+<DT><A HREF="#lbAF">EXAMPLE</A><DD>
+<DT><A HREF="#lbAG">SEE ALSO</A><DD>
+<DT><A HREF="#lbAH">AUTHOR</A><DD>
+<DT><A HREF="#lbAI">BUGS</A><DD>
+</DL>
+<HR>
+This document was created by
+man2html,
+using the manual pages.<BR>
+Time: 19:19:16 GMT, April 15, 2000
+</BODY>
+</HTML>
