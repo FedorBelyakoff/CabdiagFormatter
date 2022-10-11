@@ -23,7 +23,7 @@ public class ClipboardUtil implements Runnable {
     @Override
     public void run() {
         buffer = new TextBufferImp();
-        String command = "";
+        String command;
         if (args.length > 0) {
             command = args[0];
         } else {
@@ -73,14 +73,18 @@ public class ClipboardUtil implements Runnable {
             System.err.println("Clipboard is empty!");
         } else {
             System.out.println(buffer.savedText());
-            try {
-                OutputStreamWriter writer = new OutputStreamWriter(
-                                 System.out, DEFAULT_CMD_CHARSET);
-                writer.write(buffer.savedText());
-                writer.flush();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            writeSaved();
+        }
+    }
+
+    private void writeSaved() {
+        try {
+            OutputStreamWriter writer = new OutputStreamWriter(
+                             System.out, DEFAULT_CMD_CHARSET);
+            writer.write(buffer.savedText());
+            writer.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
