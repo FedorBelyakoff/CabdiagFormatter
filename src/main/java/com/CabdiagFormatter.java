@@ -1,12 +1,10 @@
 
 package com;
 
-import com.annotations.JarName;
 import com.google.inject.Guice;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.interfaces.JavaExecutor;
-import org.apache.commons.cli.*;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.log4j.Logger;
 
@@ -19,13 +17,11 @@ import java.util.Scanner;
 
 public class CabdiagFormatter implements Runnable {
     private static final Logger LOG = Logger.getLogger(CabdiagFormatter.class);
-    //    public static final String JAR_NAME = "Clipboard-1.0-SNAPSHOT-jar-with-dependencies.jar";
     private static String[] args;
-    private String daemonPackage;
-    private String daemonName;
-    private JavaExecutor executor;
-    private Class<? extends FormatDaemon> daemonClass;
-    private StringIOConverter converter;
+    private final String daemonName;
+    private final JavaExecutor executor;
+    private final Class<? extends FormatDaemon> daemonClass;
+    private final StringIOConverter converter;
 
 
     public static void main(String... args) {
@@ -57,7 +53,7 @@ public class CabdiagFormatter implements Runnable {
     public CabdiagFormatter(Class<? extends FormatDaemon> daemonClass,
                             JavaExecutor executor,
                             StringIOConverter converter) {
-        daemonPackage = daemonClass.getPackage().getName();
+        String daemonPackage = daemonClass.getPackage().getName();
         daemonName = daemonClass.getName()
                 .replace(daemonPackage + '.', "");
         this.executor = executor;
@@ -129,11 +125,13 @@ public class CabdiagFormatter implements Runnable {
             System.err.println("Daemon isn't running!");
             return;
         }
-        String[] args = {"taskkill.exe",
+        String[] args =
+                {"taskkill.exe",
                 "/PID",
                 String.valueOf(daemonProcessId()),
                 "/F"};
         executor.execInConsole(args);
+        System.out.println("Daemon was stopped.");
     }
 
 
@@ -144,6 +142,7 @@ public class CabdiagFormatter implements Runnable {
         }
 
         executor.javaw(daemonClass);
+        System.out.println("Daemon was run successfully.");
     }
 
     private boolean isDaemonStopped() {
@@ -183,31 +182,4 @@ public class CabdiagFormatter implements Runnable {
         return result;
     }
 
-//    private class JavaProcess {
-//
-//
-//        private final String text;
-//
-//        public JavaProcess(String text) {
-//            this.text = text;
-//        }
-//
-//        public String name() {
-//            Matcher matcher = matcher();
-//            return matcher().group()
-//        }
-//
-//        private Matcher matcher() {
-//            return Pattern.compile("(?<id>\\d+) (?<psName>.+?) (?<arg> .+?).*")
-//                    .matcher(text);
-//        }
-//
-//        public String parameter() {
-//            return method;
-//        }
-//
-//        public int id() {
-//            return id;
-//        }
-//    }
 }
