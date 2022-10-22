@@ -45,8 +45,7 @@ public class CabdiagFormatter implements Runnable {
 
     @Inject
     public CabdiagFormatter(JavaExecutor executor,
-                            StringIOConverter converter
-    ) {
+                            StringIOConverter converter) {
         this(FormatDaemon.class, executor, converter);
     }
 
@@ -54,7 +53,8 @@ public class CabdiagFormatter implements Runnable {
                             JavaExecutor executor,
                             StringIOConverter converter) {
         String daemonPackage = daemonClass.getPackage().getName();
-        daemonName = daemonClass.getName()
+        daemonName = daemonClass
+                .getName()
                 .replace(daemonPackage + '.', "");
         this.executor = executor;
         this.daemonClass = daemonClass;
@@ -72,7 +72,7 @@ public class CabdiagFormatter implements Runnable {
             runDaemon();
             return;
         }
-        LOG.debug("Running with args: "
+        LOG.debug("Run with args: "
                 + String.join(" ", args));
         processCommand(command);
     }
@@ -95,19 +95,24 @@ public class CabdiagFormatter implements Runnable {
                 showHelp();
                 return;
             default:
-                throw new IllegalStateException("Unexpected value: " + command);
+                System.err.println("Unrecognized arg!");
+                LOG.error("Unexpected arg: " + command);
+                showHelp();
+//                throw new IllegalStateException("Unexpected value: " + command);
         }
     }
 
     private void showHelp() {
-        System.out.println("stop    - Остановить.\n" +
+        System.out.println(
+                "stop    - Остановить.\n" +
                 "status    - Узнать, запущен ли.\n" +
                 "help      - Справка.\n" +
                 "-help     \n" +
                 "--help    \n" +
                 "-h        \n" +
                 "?         \n" +
-                "/?        \n");
+                "/?        \n"
+        );
     }
 
 
@@ -163,16 +168,19 @@ public class CabdiagFormatter implements Runnable {
 
     private Map<Integer, String> processMap() {
         Map<Integer, String> result = new HashMap<>();
-        InputStream psStream = executor.jps()
+        InputStream psStream = executor
+                .jps()
                 .getInputStream();
         String jpsOut = converter.read(psStream);
         Scanner sc = new Scanner(jpsOut);
 
         while (sc.hasNextLine()) {
-            String psId = sc.findInLine("[0-9]+");
+            String psIdStr = sc.findInLine("[0-9]+");
             String psName = sc.findInLine("\\w+");
-            if (psId != null && psName != null) {
-                result.put(Integer.parseInt(psId.trim()), psName.trim());
+            if (psIdStr != null && psName != null) {
+                int psId = Integer.parseInt(psIdStr.trim());
+                psName = psName.trim();
+                result.put(psId, psName);
             }
             if (sc.hasNextLine()) {
                 sc.nextLine();

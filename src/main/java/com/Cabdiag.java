@@ -147,7 +147,7 @@ public class Cabdiag {
 
     }
     public enum PairState {
-        OK, SHORT, OPEN, SHUTDOWN, NO_CABLE;
+        OK, SHORT, OPEN, SHUTDOWN, NO_CABLE, NO_PRESENT
     }
 
 

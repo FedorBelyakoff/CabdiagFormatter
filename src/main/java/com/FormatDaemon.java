@@ -9,7 +9,6 @@ import com.interfaces.TextBuffer;
 import org.apache.log4j.Logger;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.datatransfer.FlavorEvent;
 import java.awt.datatransfer.FlavorListener;
 
@@ -17,7 +16,6 @@ import static com.Cabdiag.CableState.ON;
 
 
 public class FormatDaemon extends JFrame implements FlavorListener, Runnable {
-    private static final String JDK_PATH = "\\jdk\\bin\\java.exe";
     private static final Logger LOG = Logger.getLogger(FormatDaemon.class);
     private final TextBuffer buffer;
     private final CabdiagFactory cabdiagFactory;
@@ -80,8 +78,8 @@ public class FormatDaemon extends JFrame implements FlavorListener, Runnable {
         }
 
         Format format;
-        boolean singleFormat = previous == null ||
-                in.cableState() == previous.cableState();
+        boolean singleFormat =
+                previous == null || in.cableState() == previous.cableState();
         if (singleFormat) {
             System.err.println("Single state format selected.");
             format = singleStateFormat();
@@ -94,8 +92,8 @@ public class FormatDaemon extends JFrame implements FlavorListener, Runnable {
         String formatted = format.formattedText();
         prevFormatted = formatted;
         buffer.save(formatted);
-        System.err.println("Formatted text saved to buffer. Text: " +
-                formatted);
+        System.err.println(
+                "Formatted text saved to buffer. Text: " + formatted);
     }
 
 

@@ -1,24 +1,23 @@
 package com;
 
-import org.apache.commons.lang3.StringUtils;
+import static com.Cabdiag.PairState.NO_PRESENT;
 
 public abstract class Format {
+    Format() {
+    }
+
+
     public static Format doubleState(Cabdiag cableOn, Cabdiag cableOf) {
         return new Format() {
             @Override
             public String formattedText() {
-                return "Свитч: " + cableOf.switchAddress() + ".\n" +
-                        "Порт: " + cableOf.port() + ".\n" +
-                        "При вкл: все - " +
-                        stateText(cableOn.firstState()) +
-                        " " + cableOn.firstLength() + "м.\n" +
-                        "При выкл:\n\tпервая - " +
-                        stateText(cableOf.firstState()) + " на " +
-                        cableOf.firstLength() +
-                        "м,\n\tвторая - " +
-                        stateText(cableOf.secondState()) + " на " +
-                        cableOf.secondLength() + "м.";
-
+                String result = head(cableOn);
+                result += "При вкл: ";
+                result += formatPairs(cableOn);
+                result += '\n';
+                result += "При выкл: ";
+                result += formatPairs(cableOf);
+                return result;
             }
         };
     }
@@ -28,29 +27,75 @@ public abstract class Format {
         return new Format() {
             @Override
             public String formattedText() {
-                return "Свитч: " + cableOf.switchAddress() + ".\n" +
-                                 "Порт: " + cableOf.port() + ".\n" +
-                                 "При выкл:\n\tпервая - " +
-                                 stateText(cableOf.firstState()) + " на " +
-                                 cableOf.firstLength() +
-                                 "м,\n\tвторая - " +
-                                 stateText(cableOf.secondState()) + " на " +
-                                 cableOf.secondLength() + "м.";
+                String result = head(cableOf);
+                result += "При выкл:\n";
+                result += formatPairs(cableOf);
+                return result;
             }
         };
     }
 
 
     public static Format stateOn(Cabdiag cableOn) {
-        if (cableOn.firstState() == cableOn.secondState()) {
-            return new CableOnSamePairs(cableOn);
-        } else {
-            return new CableOnDifferentPairs(cableOn);
-        }
+               return new Format() {
+            @Override
+            public String formattedText() {
+                String result = head(cableOn);
+                result += "При вкл: ";
+                result += formatPairs(cableOn);
+                return result;
+            }
+        };
+
     }
 
 
     public abstract String formattedText();
+
+
+    @Override
+    public String toString() {
+        return formattedText();
+    }
+
+
+    protected String formatPairs(Cabdiag cableOn) {
+        String result = "";
+        if (cableOn.firstState() == cableOn.secondState()) {
+            result += allPairStr(cableOn);
+        } else {
+            if (NO_PRESENT != cableOn.firstState()) {
+                result += firstPairStr(cableOn);
+            }
+            if (NO_PRESENT != cableOn.secondState()) {
+                result += secondPairStr(cableOn);
+            }
+        }
+        result += '.';
+        return result;
+    }
+
+    protected String head(Cabdiag c) {
+        return String.format("Свитч: %s.\nПорт: %s.\n",
+                         c.switchAddress(), c.port());
+    }
+
+    protected String allPairStr(Cabdiag c) {
+        return String.format("все - %s на %sм",
+                         stateText(c.firstState()), c.secondLength());
+    }
+
+
+    protected String firstPairStr(Cabdiag c) {
+        return String.format("\n\tпервая - %s на %sм",
+                         stateText(c.firstState()), c.firstLength());
+    }
+
+
+    protected String secondPairStr(Cabdiag c) {
+        return String.format(",\n\tвторая - %s на %sм",
+                         stateText(c.secondState()), c.secondLength());
+    }
 
 
     protected String stateText(Cabdiag.PairState s) {
@@ -66,60 +111,9 @@ public abstract class Format {
             case NO_CABLE:
                 return "Нет кабеля.";
             default:
-            throw new IllegalStateException("Неизвестное состояние.");
+                throw new IllegalStateException("Неизвестное состояние.");
         }
     }
 
 
-    @Override
-    public String toString() {
-        return formattedText();
-    }
-
-
-    Format() {
-    }
-
-
-    private static class CableOnDifferentPairs extends Format {
-        private final Cabdiag cableOn;
-
-
-        public CableOnDifferentPairs(Cabdiag cableOn) {
-            this.cableOn = cableOn;
-        }
-
-
-        @Override
-        public String formattedText() {
-            return "Свитч: " + cableOn.switchAddress() + ".\n" +
-                             "Порт: " + cableOn.port() + ".\n" +
-                             "При вкл:\n" +
-                             "\tпервая - " + stateText(cableOn.firstState()) +
-                             " на " + cableOn.firstLength() + "м,\n" +
-                             "\tвторая - " + stateText(cableOn.secondState()) +
-                             " на " + cableOn.secondLength() + "м.";
-        }
-    }
-
-
-
-    private static class CableOnSamePairs extends Format {
-        private final Cabdiag cableOn;
-
-
-        public CableOnSamePairs(Cabdiag cableOn) {
-            this.cableOn = cableOn;
-        }
-
-
-        @Override
-        public String formattedText() {
-            return "Свитч: " + cableOn.switchAddress() + ".\n" +
-                             "Порт: " + cableOn.port() + ".\n" +
-                             "При вкл: все - " +
-                             stateText(cableOn.firstState()) +
-                             " " + cableOn.firstLength() + "м.";
-        }
-    }
 }

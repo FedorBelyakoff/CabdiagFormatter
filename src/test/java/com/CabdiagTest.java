@@ -15,6 +15,8 @@ class CabdiagTest {
     }
 
 
+    
+
     @Test
     void shouldReturnTrueWhenCabdiagIsCorrect() {
         assertTrue(allPairsOk().isCorrect());
@@ -33,6 +35,36 @@ class CabdiagTest {
     @Test
     void shouldReturnSecondPairStateShortWhen1PairIsOkAndSecondShort() {
 
+    }
+
+
+    @Test
+    void shouldReturnFirstPairOpenWhenOnlyFirstPairIsPresent() {
+        Cabdiag cabdiag = firstPairOpened();
+        assertEquals(OPEN, cabdiag.firstState());
+        assertEquals(NO_PRESENT, cabdiag.secondState());
+    }
+
+
+    @Test
+    void shouldReturnIsCabdiagTrueWhenOnlyFirstPairIsPresent() {
+        assertTrue(firstPairOpened().isCorrect());
+    }
+
+
+    @Test
+    void shouldReturnSecondPairLengthWhenOnlyFirstPairIsPresent() {
+        int expected = -1;
+        int actual = firstPairOpened().secondLength();
+        assertEquals(expected, actual);
+    }
+
+
+    @Test
+    void shouldReturnFirstPairLengthWhenOnlyFirstPairIsPresent() {
+        int expected = 26;
+        int actual = firstPairOpened().firstLength();
+        assertEquals(expected, actual);
     }
 
 
@@ -75,6 +107,20 @@ class CabdiagTest {
     void shouldReturnSecondPairStateShortThenAllShort() {
         PairState actual = allPairsShort().secondState();
         assertEquals(SHORT, actual);
+    }
+
+
+    private Cabdiag firstPairOpened() {
+        return new Cabdiag("\n" +
+                         "10.240.184.143:5#cable_diag ports 7\n" +
+                         "Command: cable_diag ports 7\n" +
+                         "\n" +
+                         " Perform Cable Diagnostics ...\n" +
+                         "\n" +
+                         " Port   Type      Link Status          Test Result          Cable Length (M)\n" +
+                         " ----  -------  --------------  -------------------------  -----------------\n" +
+                         "  7     FE         Link Down     Pair1 Open     at 26  M          -\n");
+
     }
 
 

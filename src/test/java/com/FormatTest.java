@@ -3,8 +3,7 @@ package com;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static com.Cabdiag.PairState.OK;
-import static com.Cabdiag.PairState.SHORT;
+import static com.Cabdiag.PairState.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -23,10 +22,21 @@ class FormatTest {
                          .toString();
         String expected = "Свитч: 10.240.27.150.\n" +
                          "Порт: 22.\n" +
-                         "При вкл: все - подключена 55м.";
+                         "При вкл: все - подключена на 55м.";
         assertEquals(expected, actual);
     }
 
+
+    @Test
+    void shouldReturnCorrectTextWhenOnePairIsPresent() {
+        String  actual = Format.stateOn(onePairOpened())
+                .formattedText();
+        String expected = "Свитч: 10.240.27.150.\n" +
+                "Порт: 12.\n" +
+                "При вкл: \n" +
+                "\tпервая - открыта на 120м.";
+        assertEquals(expected, actual);
+    }
 
     @Test
     void shouldReturnCorrectTextWhenFirstOkAndSecondShort() {
@@ -34,7 +44,7 @@ class FormatTest {
                          .toString();
         String expected = "Свитч: 10.240.27.150.\n" +
                          "Порт: 12.\n" +
-                         "При вкл:\n" +
+                         "При вкл: \n" +
                          "\tпервая - подключена на 120м,\n" +
                          "\tвторая - шорт на 33м.";
         assertEquals(expected, actual);
@@ -43,13 +53,16 @@ class FormatTest {
 
     @Test
     void shouldReturnCorrectTextWhenFirsSamePairsAndSecondDifferentInputPutted() {
-        Format actual = Format.doubleState(allOkInput(), firstOkSecondShortInput());
+        String  actual = Format
+                .doubleState(allOkInput(), firstOkSecondShortInput())
+                .formattedText();
         String expected = "Свитч: 10.240.27.150.\n" +
                          "Порт: 22.\n" +
-                         "При вкл: все - подключена 55м.\n" +
-                         "При выкл:\n" +
-                         "\tпервая - подключена 120м,\n" +
-                         "\tвторая - шорт 33м.";
+                         "При вкл: все - подключена на 55м.\n" +
+                         "При выкл: \n" +
+                         "\tпервая - подключена на 120м,\n" +
+                         "\tвторая - шорт на 33м.";
+        assertEquals(expected, actual);
     }
 
 
@@ -64,6 +77,17 @@ class FormatTest {
         return in;
     }
 
+
+    private Cabdiag onePairOpened() {
+        Cabdiag in = mock(Cabdiag.class);
+        when(in.switchAddress()).thenReturn("10.240.27.150");
+        when(in.port()).thenReturn(12);
+        when(in.firstState()).thenReturn(OPEN);
+        when(in.secondState()).thenReturn(NO_PRESENT);
+        when(in.firstLength()).thenReturn(120);
+        when(in.secondLength()).thenReturn(-1);
+        return in;
+    }
 
     private Cabdiag firstOkSecondShortInput() {
         Cabdiag in = mock(Cabdiag.class);

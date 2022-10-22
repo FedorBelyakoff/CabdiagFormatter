@@ -6,12 +6,9 @@ import com.interfaces.JavaExecutor;
 import com.interfaces.TextBuffer;
 
 import java.io.*;
-import java.util.Scanner;
 
 
 public class WindowsBuffer implements TextBuffer {
-    private static final String DEFAULT_CMD_CHARSET = "IBM866";
-    private static final String JDK_PATH = "\\jdk\\bin\\java.exe";
 
     private final String clipUtilPath;
     private final JavaExecutor executor;
@@ -54,8 +51,9 @@ public class WindowsBuffer implements TextBuffer {
 
 
     private void saveToBuffer(String text) throws IOException {
-        OutputStream utilIn = executor.execInConsole(
-                clipUtilPath + "\\"+ "winclip.exe", "-c")
+        OutputStream utilIn = executor
+                .execInConsole(
+                        clipUtilPath + "\\"+ "winclip.exe", "-c")
                 .getOutputStream();
         converter.write(text, utilIn);
     }
@@ -71,22 +69,4 @@ public class WindowsBuffer implements TextBuffer {
     }
 
 
-    private void write(String text, OutputStream out) throws IOException {
-        OutputStreamWriter writer = new OutputStreamWriter(out);
-        writer.write(text);
-        writer.flush();
-    }
-
-
-    private String read(InputStream in) {
-        StringBuilder result = new StringBuilder();
-        Scanner sc = new Scanner(in, DEFAULT_CMD_CHARSET);
-        while (sc.hasNextLine()) {
-            result.append(sc.nextLine());
-            result.append('\n');
-        }
-        int endPosition = result.length() - 1;
-        result.deleteCharAt(endPosition);
-        return result.toString();
-    }
 }

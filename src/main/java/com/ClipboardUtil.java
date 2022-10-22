@@ -79,8 +79,7 @@ public class ClipboardUtil implements Runnable {
 
     private void writeSaved() {
         try {
-            OutputStreamWriter writer = new OutputStreamWriter(
-                             System.out, DEFAULT_CMD_CHARSET);
+            OutputStreamWriter writer = new OutputStreamWriter(System.out, DEFAULT_CMD_CHARSET);
             writer.write(buffer.savedText());
             writer.flush();
         } catch (IOException e) {
@@ -90,11 +89,11 @@ public class ClipboardUtil implements Runnable {
 
 
     private void showHelp() {
-        System.out.println("Справка.");
-        System.out.println("put <текст> Поместить текст в буфер.");
-        System.out.println("show        Смотреть содержимое буфера.");
-        System.out.println("check       Проверить, есть ли что-то в буфере.");
-        System.out.println("              Если пусто возвращает статус 1, иначе - 0.");
-        System.out.println("help        Справка.");
+        System.out.println("Справка." +
+                "put <текст> Поместить текст в буфер." +
+                "show        Смотреть содержимое буфера." +
+                "check       Проверить, есть ли что-то в буфере." +
+                "              Если пусто возвращает статус 1, иначе - 0." +
+                "help        Справка.");
     }
 }
