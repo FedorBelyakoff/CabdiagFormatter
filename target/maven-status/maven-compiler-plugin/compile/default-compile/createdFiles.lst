@@ -1,5 +1,4 @@
 events\SubscribersRegister.class
-com\Format$CableOnDifferentPairs.class
 com\annotations\ClipUtilPath.class
 com\Format$1.class
 com\interfaces\CabdiagFactory.class
@@ -32,6 +31,5 @@ com\Format.class
 com\DaemonModule.class
 com\DefaultJdkExecutor.class
 com\interfaces\FormatFactory.class
-com\Format$CableOnSamePairs.class
 com\Format$2.class
 com\IncludedJdkExecutor.class
