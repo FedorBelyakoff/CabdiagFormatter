@@ -28,7 +28,7 @@ public abstract class Format {
             @Override
             public String formattedText() {
                 String result = head(cableOf);
-                result += "При выкл:\n";
+                result += "При выкл: ";
                 result += formatPairs(cableOf);
                 return result;
             }
