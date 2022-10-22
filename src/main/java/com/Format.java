@@ -61,7 +61,9 @@ public abstract class Format {
 
     protected String formatPairs(Cabdiag cableOn) {
         String result = "";
-        if (cableOn.firstState() == cableOn.secondState()) {
+        boolean pairsIsSame = cableOn.firstState() == cableOn.secondState()
+                && cableOn.firstLength() == cableOn.secondLength();
+        if (pairsIsSame) {
             result += allPairStr(cableOn);
         } else {
             if (NO_PRESENT != cableOn.firstState()) {
@@ -109,7 +111,7 @@ public abstract class Format {
             case SHUTDOWN:
                 return "shutdown";
             case NO_CABLE:
-                return "Нет кабеля.";
+                return "no cable";
             default:
                 throw new IllegalStateException("Неизвестное состояние.");
         }
