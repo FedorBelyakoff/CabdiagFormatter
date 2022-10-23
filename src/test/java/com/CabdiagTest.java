@@ -14,8 +14,18 @@ class CabdiagTest {
 
     }
 
-
-    
+    @Test
+    void shouldReturnCorrectFirstPairLengthWhen2And3PairsIsPresent() {
+        int actual = secondAndThirdPairs().firstLength();
+        int expected = 50;
+        assertEquals(expected, actual);
+    }
+    @Test
+    void shouldReturnCorrectSecondPairLengthWhen2And3PairsIsPresent() {
+        int actual = secondAndThirdPairs().secondLength();
+        int expected = 30;
+        assertEquals(expected, actual);
+    }
 
     @Test
     void shouldReturnTrueWhenCabdiagIsCorrect() {
@@ -34,7 +44,6 @@ class CabdiagTest {
 
     @Test
     void shouldReturnSecondPairStateShortWhen1PairIsOkAndSecondShort() {
-
     }
 
 
@@ -54,7 +63,7 @@ class CabdiagTest {
 
     @Test
     void shouldReturnSecondPairLengthWhenOnlyFirstPairIsPresent() {
-        int expected = -1;
+        int expected = 0;
         int actual = firstPairOpened().secondLength();
         assertEquals(expected, actual);
     }
@@ -109,88 +118,100 @@ class CabdiagTest {
         assertEquals(SHORT, actual);
     }
 
+    private Cabdiag secondAndThirdPairs() {
+        return new Cabdiag("\n" +
+                "10.240.184.143:5#cable_diag ports 7\n" +
+                "Command: cable_diag ports 7\n" +
+                "\n" +
+                " Perform Cable Diagnostics ...\n" +
+                "\n" +
+                " Port   Type      Link Status          Test Result          Cable Length (M)\n" +
+                " ----  -------  --------------  -------------------------  -----------------\n" +
+                "  7     FE         Link Down     Pair2 Open     at 30  M          -\n" +
+                "                                 Pair3 Open     at 50  M\n");
+    }
 
     private Cabdiag firstPairOpened() {
         return new Cabdiag("\n" +
-                         "10.240.184.143:5#cable_diag ports 7\n" +
-                         "Command: cable_diag ports 7\n" +
-                         "\n" +
-                         " Perform Cable Diagnostics ...\n" +
-                         "\n" +
-                         " Port   Type      Link Status          Test Result          Cable Length (M)\n" +
-                         " ----  -------  --------------  -------------------------  -----------------\n" +
-                         "  7     FE         Link Down     Pair1 Open     at 26  M          -\n");
+                "10.240.184.143:5#cable_diag ports 7\n" +
+                "Command: cable_diag ports 7\n" +
+                "\n" +
+                " Perform Cable Diagnostics ...\n" +
+                "\n" +
+                " Port   Type      Link Status          Test Result          Cable Length (M)\n" +
+                " ----  -------  --------------  -------------------------  -----------------\n" +
+                "  7     FE         Link Down     Pair1 Open     at 26  M          -\n");
 
     }
 
 
     private Cabdiag allPairsShort() {
         return new Cabdiag("\n" +
-                         "10.240.184.143:5#cable_diag ports 7\n" +
-                         "Command: cable_diag ports 7\n" +
-                         "\n" +
-                         " Perform Cable Diagnostics ...\n" +
-                         "\n" +
-                         " Port   Type      Link Status          Test Result          Cable Length (M)\n" +
-                         " ----  -------  --------------  -------------------------  -----------------\n" +
-                         "  7     FE         Link Down     Pair1 Short     at 26  M          -\n" +
-                         "                                 Pair2 Short     at 27  M\n");
+                "10.240.184.143:5#cable_diag ports 7\n" +
+                "Command: cable_diag ports 7\n" +
+                "\n" +
+                " Perform Cable Diagnostics ...\n" +
+                "\n" +
+                " Port   Type      Link Status          Test Result          Cable Length (M)\n" +
+                " ----  -------  --------------  -------------------------  -----------------\n" +
+                "  7     FE         Link Down     Pair1 Short     at 26  M          -\n" +
+                "                                 Pair2 Short     at 27  M\n");
     }
 
 
     private Cabdiag incorrectCabdiag() {
         return new Cabdiag("240.38.145:admin#cable_diag ports 2\n" +
-                         "Command: cable_diag ports \n" +
-                         "\n" +
-                         " Perform Cable Diagnostics ...\n" +
-                         "\n" +
-                         " Port   Type    Link Status            Test Result           Cable Length (M)\n" +
-                         " ----  ------  -------------  -----------------------------  ----------------\n" +
-                         "  2     FE            OK                             -\n" +
-                         "\n" +
-                         "\n");
+                "Command: cable_diag ports \n" +
+                "\n" +
+                " Perform Cable Diagnostics ...\n" +
+                "\n" +
+                " Port   Type    Link Status            Test Result           Cable Length (M)\n" +
+                " ----  ------  -------------  -----------------------------  ----------------\n" +
+                "  2     FE            OK                             -\n" +
+                "\n" +
+                "\n");
     }
 
 
     private Cabdiag allPairsShutdown() {
         return new Cabdiag("\n" +
-                         "10.241.190.145:admin#cable_diag ports 21\n" +
-                         "Command: cable_diag ports 21\n" +
-                         "\n" +
-                         "Perform Cable Diagnostics ...\n" +
-                         "\n" +
-                         "Port      Type      Link Status    Test Result                 Cable Length (M)\n" +
-                         "------  ----------  -------------  -------------------------  -----------------\n" +
-                         "21      100BASE-T   Link Down      Shutdown                          120\n" +
-                         "\n" +
-                         "\n");
+                "10.241.190.145:admin#cable_diag ports 21\n" +
+                "Command: cable_diag ports 21\n" +
+                "\n" +
+                "Perform Cable Diagnostics ...\n" +
+                "\n" +
+                "Port      Type      Link Status    Test Result                 Cable Length (M)\n" +
+                "------  ----------  -------------  -------------------------  -----------------\n" +
+                "21      100BASE-T   Link Down      Shutdown                          120\n" +
+                "\n" +
+                "\n");
     }
 
 
     private Cabdiag allOpenedPairs() {
         return new Cabdiag("\n" +
-                         "10.240.38.145:admin#cable_diag ports 3\n" +
-                         "Command: cable_diag ports 3\n" +
-                         "\n" +
-                         " Perform Cable Diagnostics ...\n" +
-                         "\n" +
-                         " Port   Type    Link Status            Test Result           Cable Length (M)\n" +
-                         " ----  ------  -------------  -----------------------------  ----------------\n" +
-                         "  3     FE      Link Down      Pair1 Open      at 17  M       -\n" +
-                         "                               Pair2 Open      at 17  M\n" +
-                         "\n");
+                "10.240.38.145:admin#cable_diag ports 3\n" +
+                "Command: cable_diag ports 3\n" +
+                "\n" +
+                " Perform Cable Diagnostics ...\n" +
+                "\n" +
+                " Port   Type    Link Status            Test Result           Cable Length (M)\n" +
+                " ----  ------  -------------  -----------------------------  ----------------\n" +
+                "  3     FE      Link Down      Pair1 Open      at 17  M       -\n" +
+                "                               Pair2 Open      at 17  M\n" +
+                "\n");
     }
 
 
     private Cabdiag allPairsOk() {
         return new Cabdiag("10.240.38.145:admin#cable_diag ports 2\n" +
-                         "Command: cable_diag ports 2\n" +
-                         "\n" +
-                         " Perform Cable Diagnostics ...\n" +
-                         "\n" +
-                         " Port   Type    Link Status            Test Result           Cable Length (M)\n" +
-                         " ----  ------  -------------  -----------------------------  ----------------\n" +
-                         "  2     FE      Link Up        OK                             67\n" +
-                         "\n");
+                "Command: cable_diag ports 2\n" +
+                "\n" +
+                " Perform Cable Diagnostics ...\n" +
+                "\n" +
+                " Port   Type    Link Status            Test Result           Cable Length (M)\n" +
+                " ----  ------  -------------  -----------------------------  ----------------\n" +
+                "  2     FE      Link Up        OK                             67\n" +
+                "\n");
     }
 }

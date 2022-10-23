@@ -11,29 +11,34 @@ import static com.Cabdiag.PairState.*;
 
 public class Cabdiag {
     private static final Pattern TWO_PAIRS_PATTERN = Pattern.compile("(.*?)" +
-                     "(?<switch>([0-9]{1,3}\\.){3}([0-9]){1,3})" +
-                     "(.*?)(ports)([ \\t]+)" +
-                     "(?<port>[0-9]+)" +
-                     "(.*?)" +
-                     "(?<firstState>OK|Short|Open)" +
-                     "([ \\t]+)(at)([ \\t]+)" +
-                     "(?<firstLength>[0-9]+)" +
-                     "(.*?)" +
-                     "(?<secondState>OK|Short|Open)" +
-                     "([ \\t]+)(at)([ \\t]+)" +
-                     "(?<secondLength>[0-9]+)" +
-                     "(.*)", Pattern.DOTALL);
+            "(?<switch>([0-9]{1,3}\\.){3}([0-9]){1,3})" +
+            "(.*?)(ports)([ \\t]+)" +
+            "(?<port>[0-9]+)" +
+            "(.*)" +
+            "(Link Down|Link Up)" +
+            "(" +
+            "([ \\t]+Pair[13][ \\t]+" +
+            "(?<firstState>OK|Short|Open)" +
+            "([ \\t]+)(at)([ \\t]+)" +
+            "(?<firstLength>[0-9]+)(.*?))" +
+            "|" +
+            "([ \\t]+Pair2[ \\t]+" +
+            "(?<secondState>OK|Short|Open)" +
+            "([ \\t]+)(at)([ \\t]+)" +
+            "(?<secondLength>[0-9]+)" +
+            "(.*?))" +
+            "){1,2}", Pattern.DOTALL);
     private static final Pattern ALL_PAIRS_PATTERN = Pattern.compile("(.*?)" +
-                     "(?<switch>([0-9]{1,3}\\.){3}([0-9]){1,3})" +
-                     "(.*?)" +
-                     "(ports)([ \\t]+)" +
-                     "(?<port>[0-9]+)" +
-                     "(.*?)" +
-                     "(Link Down|Link Up)([ \\t]+)" +
-                     "(?<firstState>(?<secondState>OK|Shutdown|No Cable))" +
-                     "([ \\t]+)" +
-                     "(?<firstLength>(?<secondLength>-|[0-9]+))" +
-                     "(.*)", Pattern.DOTALL);
+            "(?<switch>([0-9]{1,3}\\.){3}([0-9]){1,3})" +
+            "(.*?)" +
+            "(ports)([ \\t]+)" +
+            "(?<port>[0-9]+)" +
+            "(.*?)" +
+            "(Link Down|Link Up)([ \\t]+)" +
+            "(?<firstState>(?<secondState>OK|Shutdown|No Cable))" +
+            "([ \\t]+)" +
+            "(?<firstLength>(?<secondLength>-|[0-9]+))" +
+            "(.*)", Pattern.DOTALL);
     private final String text;
 
 
@@ -44,7 +49,7 @@ public class Cabdiag {
 
     public boolean isCorrect() {
         return TWO_PAIRS_PATTERN.matcher(text).matches()
-                         || ALL_PAIRS_PATTERN.matcher(text).matches();
+                || ALL_PAIRS_PATTERN.matcher(text).matches();
     }
 
 
@@ -67,21 +72,48 @@ public class Cabdiag {
 
     public int firstLength() {
         String lengthStr = textFromGroup("firstLength");
-        return lengthStr.equals("-") ? 0 : Integer.parseInt(lengthStr);
+        return valueOrZero(lengthStr);
     }
 
 
     public PairState secondState() {
-        String state = textFromGroup("firstState");
-        return stateFrom(state);
+        String second = textFromGroup("secondState");
+        return stateFrom(second);
     }
 
 
     public int secondLength() {
         String lengthStr = textFromGroup("secondLength");
-        return lengthStr.equals("-") ? 0 : Integer.parseInt(lengthStr);
+        return valueOrZero(lengthStr);
     }
 
+
+    public CableState cableState() {
+        boolean ok = firstState() == OK || secondState() == OK;
+        boolean shutdown = firstState() == SHUTDOWN
+                && secondState() == SHUTDOWN;
+        return (ok || shutdown) ? ON : OFF;
+    }
+
+    @Override
+    public String toString() {
+        if (this.isCorrect()) {
+            return MoreObjects.toStringHelper(this)
+                    .add("Switch", switchAddress())
+                    .add("Port", port())
+                    .add("cable state", cableState())
+                    .add("1st pair state", firstState())
+                    .add("1st length", firstLength())
+                    .add("2nd state", secondState())
+                    .add("2nd length", secondLength())
+                    .toString();
+        } else {
+            return MoreObjects.toStringHelper(this)
+                    .add("Isn't cabdiag.", 0)
+                    .add("text", text)
+                    .toString();
+        }
+    }
 
     private String textFromGroup(String name) {
         Matcher twoMatcher = TWO_PAIRS_PATTERN.matcher(text);
@@ -97,39 +129,17 @@ public class Cabdiag {
     }
 
 
-
-    public CableState cableState() {
-        boolean ok = firstState() == OK || secondState() == OK;
-        boolean shutdown = firstState() == SHUTDOWN
-                         && secondState() == SHUTDOWN;
-        return (ok || shutdown) ? ON : OFF;
+    private static int valueOrZero(String lengthStr) {
+        return lengthStr == null || lengthStr.equals("-")
+                ? 0
+                : Integer.parseInt(lengthStr);
     }
-
-
-    @Override
-    public String toString() {
-        if (this.isCorrect()) {
-            return MoreObjects.toStringHelper(this)
-                             .add("Switch", switchAddress())
-                             .add("Port", port())
-                             .add("cable state", cableState())
-                             .add("1st pair state", firstState())
-                             .add("1st length", firstLength())
-                             .add("2nd state", secondState())
-                             .add("2nd length", secondLength())
-                             .toString();
-        } else {
-            return MoreObjects.toStringHelper(this)
-                             .add("Isn't cabdiag.", 0)
-                             .add("text", text)
-                             .toString();
-        }
-    }
-
-
 
 
     private PairState stateFrom(String text) {
+        if (text == null) {
+            return NO_PRESENT;
+        }
         switch (text) {
             case "Open":
                 return OPEN;
@@ -146,10 +156,10 @@ public class Cabdiag {
         }
 
     }
+
     public enum PairState {
         OK, SHORT, OPEN, SHUTDOWN, NO_CABLE, NO_PRESENT
     }
-
 
 
     public enum CableState {
