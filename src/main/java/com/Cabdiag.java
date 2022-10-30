@@ -17,12 +17,12 @@ public class Cabdiag {
             "(.*)" +
             "(Link Down|Link Up)" +
             "(" +
-            "([ \\t]+Pair[13][ \\t]+" +
+            "([ \\t]+Pair *[13][ \\t]+" +
             "(?<firstState>OK|Short|Open)" +
             "([ \\t]+)(at)([ \\t]+)" +
             "(?<firstLength>[0-9]+)(.*?))" +
             "|" +
-            "([ \\t]+Pair2[ \\t]+" +
+            "([ \\t]+Pair *2[ \\t]+" +
             "(?<secondState>OK|Short|Open)" +
             "([ \\t]+)(at)([ \\t]+)" +
             "(?<secondLength>[0-9]+)" +

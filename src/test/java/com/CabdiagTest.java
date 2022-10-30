@@ -145,8 +145,8 @@ class CabdiagTest {
                 "\n" +
                 " Port   Type      Link Status          Test Result          Cable Length (M)\n" +
                 " ----  -------  --------------  -------------------------  -----------------\n" +
-                "  7     FE         Link Down     Pair2 Open     at 30  M          -\n" +
-                "                                 Pair3 Open     at 50  M\n");
+                "  7     FE         Link Down     Pair 2 Open     at 30  M          -\n" +
+                "                                 Pair 3 Open     at 50  M\n");
     }
 
     private Cabdiag firstPairOpened() {
