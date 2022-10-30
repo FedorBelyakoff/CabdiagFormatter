@@ -54,10 +54,28 @@ class CabdiagTest {
         assertEquals(NO_PRESENT, cabdiag.secondState());
     }
 
+    @Test
+    void shouldReturnSecondPairLengthWhenOnlySecondPairIsPresent() {
+        int actual = secondPairOpened().secondLength();
+        int expected = 26;
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void shouldReturnSecondPairOpenWhenOnlySecondPairIsPresent() {
+        Cabdiag cabdiag = secondPairOpened();
+        assertEquals(OPEN, cabdiag.secondState());
+        assertEquals(NO_PRESENT, cabdiag.firstState());
+    }
+
 
     @Test
     void shouldReturnIsCabdiagTrueWhenOnlyFirstPairIsPresent() {
         assertTrue(firstPairOpened().isCorrect());
+    }
+    @Test
+    void shouldReturnIsCabdiagTrueWhenOnlySecondPairIsPresent() {
+        assertTrue(secondPairOpened().isCorrect());
     }
 
 
@@ -141,6 +159,18 @@ class CabdiagTest {
                 " Port   Type      Link Status          Test Result          Cable Length (M)\n" +
                 " ----  -------  --------------  -------------------------  -----------------\n" +
                 "  7     FE         Link Down     Pair1 Open     at 26  M          -\n");
+
+    }
+    private Cabdiag secondPairOpened() {
+        return new Cabdiag("\n" +
+                "10.240.184.143:5#cable_diag ports 7\n" +
+                "Command: cable_diag ports 7\n" +
+                "\n" +
+                " Perform Cable Diagnostics ...\n" +
+                "\n" +
+                " Port   Type      Link Status          Test Result          Cable Length (M)\n" +
+                " ----  -------  --------------  -------------------------  -----------------\n" +
+                "  7     FE         Link Down     Pair2 Open     at 26  M          -\n");
 
     }
 
