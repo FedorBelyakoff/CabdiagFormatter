@@ -1,8 +1,10 @@
 package com;
 
 import static com.Cabdiag.PairState.NO_PRESENT;
+import static com.Cabdiag.PairState.OK;
 
 public abstract class Format {
+
     Format() {
     }
 
@@ -63,6 +65,7 @@ public abstract class Format {
         String result = "";
         boolean pairsIsSame = cableOn.firstState() == cableOn.secondState()
                 && cableOn.firstLength() == cableOn.secondLength();
+
         if (pairsIsSame) {
             result += allPairStr(cableOn);
         } else {
@@ -83,8 +86,16 @@ public abstract class Format {
     }
 
     protected String allPairStr(Cabdiag c) {
-        return String.format("все - %s на %sм",
-                         stateText(c.firstState()), c.secondLength());
+        if (Cabdiag.UNDEFINED_LENGTH == c.firstLength()) {
+            if (OK == c.firstState()) {
+                return "link down ok";
+            } else {
+                return "shutdown";
+            }
+        } else {
+            return String.format("все - %s на %sм",
+                    stateText(c.firstState()), c.secondLength());
+        }
     }
 
 

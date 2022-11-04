@@ -10,6 +10,7 @@ import static com.Cabdiag.PairState.*;
 
 
 public class Cabdiag {
+    public static final int UNDEFINED_LENGTH = -1;
     private static final Pattern TWO_PAIRS_PATTERN = Pattern.compile("(.*?)" +
             "(?<switch>([0-9]{1,3}\\.){3}([0-9]){1,3})" +
             "(.*?)(ports)([ \\t]+)" +
@@ -72,7 +73,7 @@ public class Cabdiag {
 
     public int firstLength() {
         String lengthStr = textFromGroup("firstLength");
-        return valueOrZero(lengthStr);
+        return valueOrUndefined(lengthStr);
     }
 
 
@@ -84,7 +85,7 @@ public class Cabdiag {
 
     public int secondLength() {
         String lengthStr = textFromGroup("secondLength");
-        return valueOrZero(lengthStr);
+        return valueOrUndefined(lengthStr);
     }
 
 
@@ -129,9 +130,9 @@ public class Cabdiag {
     }
 
 
-    private static int valueOrZero(String lengthStr) {
+    private static int valueOrUndefined(String lengthStr) {
         return lengthStr == null || lengthStr.equals("-")
-                ? 0
+                ? UNDEFINED_LENGTH
                 : Integer.parseInt(lengthStr);
     }
 

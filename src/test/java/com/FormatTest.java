@@ -39,6 +39,25 @@ class FormatTest {
     }
 
     @Test
+    void shouldReturnCorrectFormatWhenLinkDownOk() {
+        String actual = Format.stateOn(linkDownOk())
+                .formattedText();
+        String expected = "Свитч: 10.240.27.150.\n" +
+                "Порт: 12.\n" +
+                "При вкл: link down ok.";
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void shouldReturnCorrectFormatWhenLinkDownShutdown() {
+        String actual = Format.stateOn(linkDownShutdown()).formattedText();
+        String expected = "Свитч: 10.240.27.150.\n" +
+                "Порт: 12.\n" +
+                "При вкл: shutdown.";
+        assertEquals(expected, actual);
+    }
+
+    @Test
     void shouldReturnCorrectTextWhenFirstOkAndSecondShort() {
         String actual = Format.stateOn(firstOkSecondShortInput())
                          .toString();
@@ -65,6 +84,32 @@ class FormatTest {
         assertEquals(expected, actual);
     }
 
+
+    private Cabdiag linkDownOk() {
+        Cabdiag result = mock(Cabdiag.class);
+        when(result.switchAddress()).thenReturn("10.240.27.150");
+        when(result.port()).thenReturn(12);
+        when(result.isCorrect()).thenReturn(true);
+        when(result.cableState()).thenReturn(Cabdiag.CableState.ON);
+        when(result.firstState()).thenReturn(OK);
+        when(result.secondState()).thenReturn(OK);
+        when(result.firstLength()).thenReturn(-1);
+        when(result.secondLength()).thenReturn(-1);
+        return result;
+    }
+
+    private Cabdiag linkDownShutdown() {
+        Cabdiag result = mock(Cabdiag.class);
+        when(result.switchAddress()).thenReturn("10.240.27.150");
+        when(result.port()).thenReturn(12);
+        when(result.isCorrect()).thenReturn(true);
+        when(result.cableState()).thenReturn(Cabdiag.CableState.ON);
+        when(result.firstState()).thenReturn(SHUTDOWN);
+        when(result.secondState()).thenReturn(SHUTDOWN);
+        when(result.firstLength()).thenReturn(-1);
+        when(result.secondLength()).thenReturn(-1);
+        return result;
+    }
 
     private Cabdiag allOkInput() {
         Cabdiag in = mock(Cabdiag.class);
