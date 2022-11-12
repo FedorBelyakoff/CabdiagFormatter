@@ -1,5 +1,6 @@
 package com;
 
+import com.Cabdiag.CableState;
 import com.Cabdiag.PairState;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,11 +16,42 @@ class CabdiagTest {
     }
 
     @Test
+    void shouldReturnCableStateOnWhenNoCableIsPresent() {
+        CableState actual = allPairsNoCable().cableState();
+        assertEquals(CableState.ON, actual);
+    }
+
+    @Test
+    void shouldReturnFirstCorrectLengthWhenNoCableIsPresent() {
+        int actual = allPairsNoCable().firstLength();
+        int expected = -1;
+        assertEquals(expected, actual);
+    }
+    @Test
+        void shouldReturnSecondCorrectLengthWhenNoCableIsPresent() {
+        int actual = allPairsNoCable().secondLength();
+        int expected = -1;
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void shouldReturnSecondCorrectStateWhenNoCableIsPresent() {
+        PairState actual = allPairsNoCable().secondState();
+        assertEquals(NO_CABLE, actual);
+    }
+    @Test
+    void shouldReturnFirstCorrectStateWhenNoCableIsPresent() {
+        PairState actual = allPairsNoCable().firstState();
+        assertEquals(NO_CABLE, actual);
+    }
+
+    @Test
     void shouldReturnCorrectFirstPairLengthWhen2And3PairsIsPresent() {
         int actual = secondAndThirdPairs().firstLength();
         int expected = 50;
         assertEquals(expected, actual);
     }
+
     @Test
     void shouldReturnCorrectSecondPairLengthWhen2And3PairsIsPresent() {
         int actual = secondAndThirdPairs().secondLength();
@@ -73,6 +105,7 @@ class CabdiagTest {
     void shouldReturnIsCabdiagTrueWhenOnlyFirstPairIsPresent() {
         assertTrue(firstPairOpened().isCorrect());
     }
+
     @Test
     void shouldReturnIsCabdiagTrueWhenOnlySecondPairIsPresent() {
         assertTrue(secondPairOpened().isCorrect());
@@ -81,7 +114,7 @@ class CabdiagTest {
 
     @Test
     void shouldReturnSecondPairLengthWhenOnlyFirstPairIsPresent() {
-        int expected = 0;
+        int expected = -1;
         int actual = firstPairOpened().secondLength();
         assertEquals(expected, actual);
     }
@@ -161,6 +194,7 @@ class CabdiagTest {
                 "  7     FE         Link Down     Pair1 Open     at 26  M          -\n");
 
     }
+
     private Cabdiag secondPairOpened() {
         return new Cabdiag("\n" +
                 "10.240.184.143:5#cable_diag ports 7\n" +
@@ -213,6 +247,20 @@ class CabdiagTest {
                 "Port      Type      Link Status    Test Result                 Cable Length (M)\n" +
                 "------  ----------  -------------  -------------------------  -----------------\n" +
                 "21      100BASE-T   Link Down      Shutdown                          120\n" +
+                "\n" +
+                "\n");
+    }
+    private Cabdiag allPairsNoCable() {
+        return new Cabdiag("\n" +
+                "\n" +
+                "10.240.148.11:admin#cable_diag ports 7\n" +
+                "Command: cable_diag ports 7\n" +
+                "\n" +
+                "Perform Cable Diagnostics ...\n" +
+                "\n" +
+                "Port      Type      Link Status    Test Result                 Cable Length (M)\n" +
+                "------  ----------  -------------  -------------------------  -----------------\n" +
+                "7       100BASE-T   Link Down      No Cable                          -\n" +
                 "\n" +
                 "\n");
     }

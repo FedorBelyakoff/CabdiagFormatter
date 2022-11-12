@@ -186,3 +186,27 @@
 2022-10-23 15:37:56 DEBUG CabdiagFormatter:75 - Run with args: status
 2022-10-23 15:37:56 DEBUG CabdiagFormatter:189 - Jps process map: {7728=Launcher, 1111=TestDaemon, 11144=RemoteMavenServer36, 3096=Jps}
 2022-10-23 15:37:56 DEBUG CabdiagFormatter:189 - Jps process map: {7728=Launcher, 11144=RemoteMavenServer36, 3096=Jps}
+2022-11-08 19:21:17 DEBUG DefaultJdkExecutor:51 - Exec in console: "jdk\bin\java.exe -cp testJarName com.TestDaemon"
+2022-11-08 19:21:17 DEBUG DefaultJdkExecutor:51 - Exec in console: "jdk\bin\jps.exe"
+2022-11-08 19:21:17 DEBUG DefaultJdkExecutor:51 - Exec in console: "jdk\bin\javaw.exe -cp testJarName com.TestDaemon status"
+2022-11-08 19:21:17 DEBUG FormatDaemon:72 - Text in clipboard: 5543534
+2022-11-08 19:21:17 DEBUG FormatDaemon:72 - Text in clipboard: 5543534
+2022-11-08 19:21:17 DEBUG FormatDaemon:72 - Text in clipboard: 5543534
+2022-11-08 19:21:17 DEBUG FormatDaemon:72 - Text in clipboard: 5543534
+2022-11-08 19:21:17 DEBUG FormatDaemon:72 - Text in clipboard: 5543534
+2022-11-08 19:21:17 DEBUG FormatDaemon:72 - Text in clipboard: 5543534
+2022-11-08 19:21:17 DEBUG FormatDaemon:72 - Text in clipboard: 5543534
+2022-11-08 19:21:17 DEBUG FormatDaemon:72 - Text in clipboard: 5543534
+2022-11-08 19:21:17 DEBUG FormatDaemon:72 - Text in clipboard: 5543534
+2022-11-08 19:21:17 DEBUG DefaultJdkExecutor:51 - Exec in console: "java.exe com.TestDaemon"
+2022-11-08 19:21:17 DEBUG DefaultJdkExecutor:51 - Exec in console: "jps.exe"
+2022-11-08 19:21:17 DEBUG DefaultJdkExecutor:51 - Exec in console: "cmd.exe /C ipconfig /ALL"
+2022-11-08 19:21:17 DEBUG DefaultJdkExecutor:51 - Exec in console: "javaw.exe com.TestDaemon status"
+2022-11-08 19:21:18 DEBUG CabdiagFormatter:75 - Run with args: stop
+2022-11-08 19:21:18 DEBUG CabdiagFormatter:189 - Jps process map: {7728=Launcher, 1111=TestDaemon, 11144=RemoteMavenServer36, 3096=Jps}
+2022-11-08 19:21:18 DEBUG CabdiagFormatter:189 - Jps process map: {7728=Launcher, 1111=TestDaemon, 11144=RemoteMavenServer36, 3096=Jps}
+2022-11-08 19:21:18 DEBUG CabdiagFormatter:189 - Jps process map: {7728=Launcher, 11144=RemoteMavenServer36, 3096=Jps}
+2022-11-08 19:21:18 DEBUG CabdiagFormatter:189 - Jps process map: {7728=Launcher, 1111=TestDaemon, 11144=RemoteMavenServer36, 3096=Jps}
+2022-11-08 19:21:18 DEBUG CabdiagFormatter:75 - Run with args: status
+2022-11-08 19:21:18 DEBUG CabdiagFormatter:189 - Jps process map: {7728=Launcher, 1111=TestDaemon, 11144=RemoteMavenServer36, 3096=Jps}
+2022-11-08 19:21:18 DEBUG CabdiagFormatter:189 - Jps process map: {7728=Launcher, 11144=RemoteMavenServer36, 3096=Jps}

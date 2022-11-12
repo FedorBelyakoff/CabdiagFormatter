@@ -1,7 +1,6 @@
 package com;
 
-import static com.Cabdiag.PairState.NO_PRESENT;
-import static com.Cabdiag.PairState.OK;
+import static com.Cabdiag.PairState.*;
 
 public abstract class Format {
 
@@ -61,19 +60,19 @@ public abstract class Format {
     }
 
 
-    protected String formatPairs(Cabdiag cableOn) {
+    protected String formatPairs(Cabdiag cabdiag) {
         String result = "";
-        boolean pairsIsSame = cableOn.firstState() == cableOn.secondState()
-                && cableOn.firstLength() == cableOn.secondLength();
+        boolean pairsIsSame = cabdiag.firstState() == cabdiag.secondState()
+                && cabdiag.firstLength() == cabdiag.secondLength();
 
         if (pairsIsSame) {
-            result += allPairStr(cableOn);
+            result += allPairStr(cabdiag);
         } else {
-            if (NO_PRESENT != cableOn.firstState()) {
-                result += firstPairStr(cableOn);
+            if (NO_PRESENT != cabdiag.firstState()) {
+                result += firstPairStr(cabdiag);
             }
-            if (NO_PRESENT != cableOn.secondState()) {
-                result += secondPairStr(cableOn);
+            if (NO_PRESENT != cabdiag.secondState()) {
+                result += secondPairStr(cabdiag);
             }
         }
         result += '.';
@@ -89,6 +88,8 @@ public abstract class Format {
         if (Cabdiag.UNDEFINED_LENGTH == c.firstLength()) {
             if (OK == c.firstState()) {
                 return "link down ok";
+            } else if (NO_CABLE == c.firstState()) {
+                return "no cable";
             } else {
                 return "shutdown";
             }

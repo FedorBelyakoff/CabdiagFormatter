@@ -93,7 +93,11 @@ public class Cabdiag {
         boolean ok = firstState() == OK || secondState() == OK;
         boolean shutdown = firstState() == SHUTDOWN
                 && secondState() == SHUTDOWN;
-        return (ok || shutdown) ? ON : OFF;
+        boolean noCable = firstState() == NO_CABLE
+                || secondState() == NO_CABLE;
+        return (ok || shutdown || noCable)
+                ? ON
+                : OFF;
     }
 
     @Override
