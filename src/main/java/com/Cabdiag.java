@@ -6,6 +6,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static com.Cabdiag.CableState.*;
+import static com.Cabdiag.LinkStatus.LINK_DOWN;
+import static com.Cabdiag.LinkStatus.LINK_UP;
 import static com.Cabdiag.PairState.*;
 
 
@@ -16,7 +18,7 @@ public class Cabdiag {
             "(.*?)(ports)([ \\t]+)" +
             "(?<port>[0-9]+)" +
             "(.*)" +
-            "(Link Down|Link Up)" +
+            "(?<linkStatus>Link Down|Link Up)" +
             "(" +
             "([ \\t]+Pair *[13][ \\t]+" +
             "(?<firstState>OK|Short|Open)" +
@@ -35,7 +37,7 @@ public class Cabdiag {
             "(ports)([ \\t]+)" +
             "(?<port>[0-9]+)" +
             "(.*?)" +
-            "(Link Down|Link Up)([ \\t]+)" +
+            "(?<linkStatus>Link Down|Link Up)([ \\t]+)" +
             "(?<firstState>(?<secondState>OK|Shutdown|No Cable))" +
             "([ \\t]+)" +
             "(?<firstLength>(?<secondLength>-|[0-9]+))" +
@@ -88,7 +90,17 @@ public class Cabdiag {
         return valueOrUndefined(lengthStr);
     }
 
-
+    public LinkStatus linkStatus() {
+        String status = textFromGroup("linkStatus");
+        switch (status) {
+            case "Link Up":
+                return LINK_UP;
+            case "Link Down":
+                return LINK_DOWN;
+            default:
+                throw new IllegalStateException("Unexpected value: " + status);
+        }
+    }
     public CableState cableState() {
         boolean ok = firstState() == OK || secondState() == OK;
         boolean shutdown = firstState() == SHUTDOWN
@@ -162,6 +174,9 @@ public class Cabdiag {
 
     }
 
+    public enum LinkStatus {
+        LINK_UP, LINK_DOWN
+    }
     public enum PairState {
         OK, SHORT, OPEN, SHUTDOWN, NO_CABLE, NO_PRESENT
     }

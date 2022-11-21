@@ -1,10 +1,13 @@
 package com;
 
 import com.Cabdiag.CableState;
+import com.Cabdiag.LinkStatus;
 import com.Cabdiag.PairState;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static com.Cabdiag.LinkStatus.LINK_DOWN;
+import static com.Cabdiag.LinkStatus.LINK_UP;
 import static com.Cabdiag.PairState.*;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -16,8 +19,20 @@ class CabdiagTest {
     }
 
     @Test
+    void shouldReturnCorrectLinkStatusWhenNoCablePutted() {
+        LinkStatus actual = allPairsNoCable().linkStatus();
+        assertEquals(LINK_DOWN, actual);
+    }
+    @Test
+    void shouldReturnCorrectLinkStatusWhenLinkUpUndefinedMetersPutted() {
+        LinkStatus actual = linkUpUndefined().linkStatus();
+        assertEquals(LINK_UP, actual);
+    }
+
+    @Test
     void shouldReturnCableStateOnWhenNoCableIsPresent() {
-        CableState actual = allPairsNoCable().cableState();
+        CableState actual = allPairsNoCable()
+                .cableState();
         assertEquals(CableState.ON, actual);
     }
 
@@ -27,24 +42,24 @@ class CabdiagTest {
         int expected = -1;
         assertEquals(expected, actual);
     }
+
     @Test
         void shouldReturnSecondCorrectLengthWhenNoCableIsPresent() {
         int actual = allPairsNoCable().secondLength();
         int expected = -1;
         assertEquals(expected, actual);
     }
-
     @Test
     void shouldReturnSecondCorrectStateWhenNoCableIsPresent() {
         PairState actual = allPairsNoCable().secondState();
         assertEquals(NO_CABLE, actual);
     }
+
     @Test
     void shouldReturnFirstCorrectStateWhenNoCableIsPresent() {
         PairState actual = allPairsNoCable().firstState();
         assertEquals(NO_CABLE, actual);
     }
-
     @Test
     void shouldReturnCorrectFirstPairLengthWhen2And3PairsIsPresent() {
         int actual = secondAndThirdPairs().firstLength();
@@ -250,6 +265,7 @@ class CabdiagTest {
                 "\n" +
                 "\n");
     }
+
     private Cabdiag allPairsNoCable() {
         return new Cabdiag("\n" +
                 "\n" +
@@ -264,7 +280,6 @@ class CabdiagTest {
                 "\n" +
                 "\n");
     }
-
 
     private Cabdiag allOpenedPairs() {
         return new Cabdiag("\n" +
@@ -290,6 +305,20 @@ class CabdiagTest {
                 " Port   Type    Link Status            Test Result           Cable Length (M)\n" +
                 " ----  ------  -------------  -----------------------------  ----------------\n" +
                 "  2     FE      Link Up        OK                             67\n" +
+                "\n");
+    }
+
+    private Cabdiag linkUpUndefined() {
+        return new Cabdiag("\n" +
+                "\n" +
+                "10.240.198.9:admin#cable_diag ports 7\n" +
+                "Command: cable_diag ports 7\n" +
+                "\n" +
+                " Perform Cable Diagnostics ...\n" +
+                "\n" +
+                " Port   Type    Link Status            Test Result           Cable Length (M)\n" +
+                " ----  ------  -------------  -----------------------------  ----------------\n" +
+                "  7     FE      Link Up        OK                             -\n" +
                 "\n");
     }
 }

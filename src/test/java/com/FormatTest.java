@@ -3,6 +3,8 @@ package com;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static com.Cabdiag.LinkStatus.LINK_DOWN;
+import static com.Cabdiag.LinkStatus.LINK_UP;
 import static com.Cabdiag.PairState.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
@@ -16,9 +18,18 @@ class FormatTest {
     }
 
     @Test
+    void shouldReturnCorrectTextWhenLinkUpOnUndefinedMeter() {
+        String actual = Format.stateOn(linkUpUndefinedMeter())
+                .formattedText();
+        String expected = "Свитч: 10.240.27.150.\n" +
+                "Порт: 12.\n" +
+                "При вкл: link up без длины.";
+        assertEquals(expected, actual);
+    }
+
+    @Test
     void shouldReturnCorrectTextWhenNoCable() {
-        String actual = Format
-                .stateOn(noCable())
+        String actual = Format.stateOn(noCable())
                 .formattedText();
         String expected = "Свитч: 10.240.27.150.\n" +
                 "Порт: 12.\n" +
@@ -95,8 +106,23 @@ class FormatTest {
         assertEquals(expected, actual);
     }
 
+    private Cabdiag linkUpUndefinedMeter() {
+        Cabdiag result = mock(Cabdiag.class);
+        when(result.linkStatus()).thenReturn(LINK_UP);
+        when(result.switchAddress()).thenReturn("10.240.27.150");
+        when(result.port()).thenReturn(12);
+        when(result.isCorrect()).thenReturn(true);
+        when(result.cableState()).thenReturn(Cabdiag.CableState.ON);
+        when(result.firstState()).thenReturn(OK);
+        when(result.secondState()).thenReturn(OK);
+        when(result.firstLength()).thenReturn(-1);
+        when(result.secondLength()).thenReturn(-1);
+        return result;
+    }
+
     private Cabdiag noCable() {
         Cabdiag result = mock(Cabdiag.class);
+        when(result.linkStatus()).thenReturn(LINK_DOWN);
         when(result.switchAddress()).thenReturn("10.240.27.150");
         when(result.port()).thenReturn(12);
         when(result.isCorrect()).thenReturn(true);
@@ -110,6 +136,7 @@ class FormatTest {
 
     private Cabdiag linkDownOk() {
         Cabdiag result = mock(Cabdiag.class);
+        when(result.linkStatus()).thenReturn(LINK_DOWN);
         when(result.switchAddress()).thenReturn("10.240.27.150");
         when(result.port()).thenReturn(12);
         when(result.isCorrect()).thenReturn(true);
@@ -123,6 +150,7 @@ class FormatTest {
 
     private Cabdiag linkDownShutdown() {
         Cabdiag result = mock(Cabdiag.class);
+        when(result.linkStatus()).thenReturn(LINK_DOWN);
         when(result.switchAddress()).thenReturn("10.240.27.150");
         when(result.port()).thenReturn(12);
         when(result.isCorrect()).thenReturn(true);
@@ -136,6 +164,7 @@ class FormatTest {
 
     private Cabdiag allOkInput() {
         Cabdiag in = mock(Cabdiag.class);
+        when(in.linkStatus()).thenReturn(LINK_UP);
         when(in.switchAddress()).thenReturn("10.240.27.150");
         when(in.port()).thenReturn(22);
         when(in.firstState()).thenReturn(OK);
@@ -148,6 +177,7 @@ class FormatTest {
 
     private Cabdiag onePairOpened() {
         Cabdiag in = mock(Cabdiag.class);
+        when(in.linkStatus()).thenReturn(LINK_DOWN);
         when(in.switchAddress()).thenReturn("10.240.27.150");
         when(in.port()).thenReturn(12);
         when(in.firstState()).thenReturn(OPEN);
@@ -159,6 +189,7 @@ class FormatTest {
 
     private Cabdiag firstOkSecondShort() {
         Cabdiag in = mock(Cabdiag.class);
+        when(in.linkStatus()).thenReturn(LINK_DOWN);
         when(in.switchAddress()).thenReturn("10.240.27.150");
         when(in.port()).thenReturn(12);
         when(in.firstState()).thenReturn(OK);

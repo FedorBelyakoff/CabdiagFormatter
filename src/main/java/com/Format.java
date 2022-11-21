@@ -1,5 +1,7 @@
 package com;
 
+import static com.Cabdiag.LinkStatus.LINK_DOWN;
+import static com.Cabdiag.LinkStatus.LINK_UP;
 import static com.Cabdiag.PairState.*;
 
 public abstract class Format {
@@ -86,16 +88,28 @@ public abstract class Format {
 
     protected String allPairStr(Cabdiag c) {
         if (Cabdiag.UNDEFINED_LENGTH == c.firstLength()) {
-            if (OK == c.firstState()) {
-                return "link down ok";
-            } else if (NO_CABLE == c.firstState()) {
-                return "no cable";
+            if (LINK_UP == c.linkStatus()) {
+                return "link up без длины";
+            } else if (LINK_DOWN == c.linkStatus()) {
+                return textOnLinkDown(c);
             } else {
-                return "shutdown";
+                throw new RuntimeException("Unknown link status!");
             }
         } else {
             return String.format("все - %s на %sм",
                     stateText(c.firstState()), c.secondLength());
+        }
+    }
+
+    private  String textOnLinkDown(Cabdiag c) {
+        if (OK == c.firstState()) {
+            return "link down ok";
+        } else if (SHUTDOWN == c.firstState()) {
+            return "shutdown";
+        } else if (c.firstState() == NO_CABLE) {
+            return "no cable";
+        } else {
+            throw new RuntimeException("Unknown pair state!");
         }
     }
 
